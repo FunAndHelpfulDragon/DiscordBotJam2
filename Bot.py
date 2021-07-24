@@ -1,4 +1,5 @@
 from discord.ext import commands
+import os
 
 prefixs = "!", "/",  # "BOT PING HERE"
 
@@ -26,7 +27,7 @@ def GetKey():
 async def Load(ctx, extension):
     if ctx.author.id == 467718535897022479 or ctx.author.id == 673573452694945862:  # noqa
         client.load_extension(f'Cogs.{extension}')  # loads a cog
-        print(f'Cog:{extension} Loaded')
+        print(f'Cog: {extension} Loaded')
 
 
 @client.command(
@@ -35,7 +36,17 @@ async def Load(ctx, extension):
 async def UnLoad(ctx, extension):
     if ctx.author.id  == 467718535897022479 or ctx.author.id == 673573452694945862:  # noqa
         client.unload_extension(f'Cogs.{extension}')  # unloads a cog
-        print(f'Cog:{extension} Unloaded')
+        print(f'Cog: {extension} Unloaded')
+
+
+@client.command(
+    description="List all cogs"
+)
+async def ListCogs(ctx):  # no need to check as it can't do anything.
+    await ctx.send("Cogs in folder: ")
+    for filename in os.listdir("./Cogs"):
+        if filename != "__pycache__":  # add no cogs here
+            await ctx.send(filename[:-3])
 
 
 # error checking
@@ -50,6 +61,11 @@ async def Load_Fail_Error(ctx, error):
 async def UnLoad_Fail_Error(ctx, error):
     await ctx.send("There was an error whilst unloading the cog.")
     print(error)
+
+
+for Cog in os.listdir("./Cogs"):
+    if Cog != "__pycache__":  # add no cogs here
+        client.load_extension(f'Cogs.{Cog[:-3]}')  # removes ".py" extension + loads cog  # noqa
 
 
 client.run(GetKey())  # runs bot
