@@ -40,6 +40,23 @@ async def UnLoad(ctx, extension):
 
 
 @client.command(
+    description="Reload a cog"
+)
+async def Reload(ctx, extension=None):
+    if ctx.author.id  == 467718535897022479 or ctx.author.id == 673573452694945862:  # noqa
+        if extension is not None:
+            client.unload_extension(f'Cogs.{extension}')
+            client.load_extension(f'Cogs.{extension}')
+            await ctx.send(f"Reloaded {extension}")
+        else:
+            for Cog in os.listdir("./Cogs"):
+                if Cog != "__pycache__":  # add no cogs here
+                    client.unload_extension(f'Cogs.{Cog[:-3]}')
+                    client.load_extension(f'Cogs.{Cog[:-3]}')
+            await ctx.send("Reloaded cogs")
+
+
+@client.command(
     description="List all cogs"
 )
 async def ListCogs(ctx):  # no need to check as it can't do anything.
