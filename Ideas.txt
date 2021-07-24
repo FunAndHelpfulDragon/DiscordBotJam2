@@ -1,2 +1,3 @@
 1. A discord bot  (or something else) that you have just found and have to look after. Every time you do something well, the bot will add it to a file. Once you have got XXX things the bot will regenerate into a new generation. (Like doctor who)
 2. https://www.youtube.com/watch?v=o1IheoDRdGE&t=7s
+3. an PvE game where every round you get to change one of your stats based on coins that you get from the previous rounds. The more score the more you can change. You can also loose coins by doing bad.
