@@ -22,7 +22,7 @@ class LoadFile():
         for line in file:
             if line.split(" ")[0] == Info:
                 result = line.split(" ")[1]  # check Files/Settings
-                return result  # return info
+                return result.rstrip('\n')  # return info
 
     def Save(self, Name, Info, New):  # save new settings
         file = self.Load(Name)

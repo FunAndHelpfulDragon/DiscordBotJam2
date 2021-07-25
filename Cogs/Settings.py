@@ -19,15 +19,18 @@ class Settings(commands.Cog):
     @commands.command(aliases=['settings', 'SETTINGS'])
     async def Settings(self, ctx, option="None"):
         # option is for if they just want to go straight there
+        # XXX: add optional value for even quicker use (e.g. change prefix:
+        # {prefix}settings change prefix)???
 
-        def view():  # view settings
+        async def view():  # view settings
             embed = discord.Embed(
                     colour=discord.Colour.red())  # setting to change?
-            embed.add_field(
+            embed.add_field(  # automatic?
                     name="Settings",
-                    value=f"Prefix: {Lo.Info(ctx.guild.id, 'Prefix')}",  # better way than putting them all here?  # noqa
+                    value=f"Prefix: {Lo.Info(ctx.guild.id, 'prefix')}",  # better way than putting them all here?  # noqa
                     )
-            return embed
+            embed.set_footer(text="Tip: you can use !settings view or !settings change to view/change settings without having to say change/view after !settings")  # noqa
+            await ctx.send(embed=embed)
 
         async def change():
             await ctx.send("What setting would you like to change?:")  # asks
@@ -43,14 +46,17 @@ class Settings(commands.Cog):
                 await ctx.send("What would you like to change it to? (cancel to not change): ")  # noqa asks for update
 
                 changesg = await self.client.wait_for('message', check=ccheck)  # waits  # noqa
-                Lo.Save(ctx.guild.id, msg.content.lower(), changesg.content)  # updates  # noqa
-                await ctx.send(f"{msg.content} has been changed to {changesg.content}")  # noqa
+                if changesg.content == "cancel":
+                    await ctx.send("Caneled!")
+                else:
+                    Lo.Save(ctx.guild.id, msg.content.lower(), changesg.content)  # updates  # noqa
+                    await ctx.send(f"{msg.content} has been changed to {changesg.content}")  # noqa
             except Exception as e:  # change to something else
                 await ctx.send(f"Recieved {e} whilst attempting to change setting")  # warning,  # noqa
                 print(e)  # error in case
 
         if option.lower() == "view":  # shortcut
-            await ctx.send(embed=view())
+            await view()
         elif option.lower() == "change":
             await change()
         else:
@@ -66,7 +72,7 @@ class Settings(commands.Cog):
             await self.client.wait_for('message', check=check)
 
         if self.view:
-            await ctx.send(embed=view())
+            await view()
         elif self.change:
             await change()
 

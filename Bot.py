@@ -7,7 +7,9 @@ prefixs = "!", "/",  # "BOT PING HERE"
 
 
 def get_prefix(client, message):
-    return Lo.Info(message.guild.id, "prefix")
+    result = Lo.Info(message.guild.id, "prefix")
+    print(result)
+    return result
 
 
 client = commands.Bot(
