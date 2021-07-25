@@ -22,27 +22,31 @@ def GetKey():
 
 
 @client.command(
-    description="Loads a cog (limited to developers)"
+    description="Loads a cog (limited to developers)",
+    aliases=['load']
 )
-async def Load(ctx, extension):
+async def _Load(ctx, extension):
+    # this if statement VV can we do something about it?
     if ctx.author.id == 467718535897022479 or ctx.author.id == 673573452694945862:  # noqa
         client.load_extension(f'Cogs.{extension}')  # loads a cog
         print(f'Cog: {extension} Loaded')
 
 
 @client.command(
-    description="Unloads a cog (limited to developers)"
+    description="Unloads a cog (limited to developers)",
+    aliases=['unload', 'Unload']
 )
-async def UnLoad(ctx, extension):
+async def _UnLoad(ctx, extension):
     if ctx.author.id  == 467718535897022479 or ctx.author.id == 673573452694945862:  # noqa
         client.unload_extension(f'Cogs.{extension}')  # unloads a cog
         print(f'Cog: {extension} Unloaded')
 
 
 @client.command(
-    description="Reload a cog"
+    description="Reload a cog (limited to developers)",
+    aliases=['reload']
 )
-async def Reload(ctx, extension=None):
+async def _Reload(ctx, extension=None):
     if ctx.author.id  == 467718535897022479 or ctx.author.id == 673573452694945862:  # noqa
         if extension is not None:
             client.unload_extension(f'Cogs.{extension}')
@@ -57,9 +61,10 @@ async def Reload(ctx, extension=None):
 
 
 @client.command(
-    description="List all cogs"
+    description="List all cogs (not limited)",
+    aliases=['List']
 )
-async def ListCogs(ctx):  # no need to check as it can't do anything.
+async def _ListCogs(ctx):  # no need to check as it can't do anything.
     await ctx.send("Cogs in folder: ")
     for filename in os.listdir("./Cogs"):
         if filename != "__pycache__":  # add no cogs here
@@ -68,15 +73,27 @@ async def ListCogs(ctx):  # no need to check as it can't do anything.
 
 # error checking
 # XXX: make it so that we know the cog that failed to load.
-@Load.error
+@_Load.error
 async def Load_Fail_Error(ctx, error):
     await ctx.send("There was an error whilst loading the cog.")
     print(error)
 
 
-@UnLoad.error
+@_UnLoad.error
 async def UnLoad_Fail_Error(ctx, error):
     await ctx.send("There was an error whilst unloading the cog.")
+    print(error)
+
+
+@_Reload.error
+async def Reload_Fail_Error(ctx, error):
+    await ctx.send("There was an error whilst trying to reload the cog.")
+    print(error)
+
+
+@_ListCogs.error
+async def ListCogs_Fail_Error(ctx, error):
+    await ctx.send("There was an errpr whilst listing the cogs")
     print(error)
 
 
