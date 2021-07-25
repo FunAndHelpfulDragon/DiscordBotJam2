@@ -30,31 +30,26 @@ class Settings(commands.Cog):
             return embed
 
         async def change():
-            await ctx.send("What setting would you like to change?:")
+            await ctx.send("What setting would you like to change?:")  # asks
             await ctx.send("Options: Prefix")
 
-            def ccheck(m):
+            def ccheck(m):  # checks
                 return m.channel == ctx.channel
 
-            msg = await self.client.wait_for('message', check=ccheck)
-            print(msg.content)
+            msg = await self.client.wait_for('message', check=ccheck)  # gets option # noqa
             try:
-                Lo.Test()
                 result = Lo.Info(ctx.guild.id, msg.content.lower())
-                await ctx.send(f"Current {msg.content.lower()}: {result}")  # noqa
-                await ctx.send("What would you like to change it to? (cancel to not change): ")  # noqa
+                await ctx.send(f"Current {msg.content.lower()}: {result}")  # noqa says current
+                await ctx.send("What would you like to change it to? (cancel to not change): ")  # noqa asks for update
 
-                def cchange(m):
-                    return m.channel == ctx.channel
-
-                changesg = await self.client.wait_for('message', check=cchange)
-                Lo.Save(ctx.guild.id, msg.content.lower(), changesg.content)
+                changesg = await self.client.wait_for('message', check=ccheck)  # waits  # noqa
+                Lo.Save(ctx.guild.id, msg.content.lower(), changesg.content)  # updates  # noqa
                 await ctx.send(f"{msg.content} has been changed to {changesg.content}")  # noqa
             except Exception as e:  # change to something else
-                await ctx.send("Not a vaild setting")
-                print(e)
+                await ctx.send(f"Recieved {e} whilst attempting to change setting")  # warning,  # noqa
+                print(e)  # error in case
 
-        if option.lower() == "view":
+        if option.lower() == "view":  # shortcut
             await ctx.send(embed=view())
         elif option.lower() == "change":
             await change()
