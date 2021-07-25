@@ -49,6 +49,7 @@ class Settings(commands.Cog):
 
                 changesg = await self.client.wait_for('message', check=cchange)
                 Lo.Save(ctx.guild.id, msg.content.lower(), changesg.content)
+                await ctx.send(f"{msg.content} has been changed to {changesg.content}")  # noqa
             except Exception as e:  # change to something else
                 await ctx.send("Not a vaild setting")
                 print(e)
