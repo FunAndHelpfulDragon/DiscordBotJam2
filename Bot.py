@@ -1,10 +1,17 @@
 from discord.ext import commands
 import os
+import Load as L
+Lo = L.LoadFile()
 
 prefixs = "!", "/",  # "BOT PING HERE"
 
+
+def get_prefix(client, message):
+    return Lo.Info(message.guild.id, "prefix")
+
+
 client = commands.Bot(
-    command_prefix=prefixs,
+    command_prefix=(get_prefix),
     description="Discord Bot Jam 2 Bot"
 )
 
