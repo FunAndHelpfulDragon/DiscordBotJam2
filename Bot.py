@@ -15,6 +15,8 @@ client = commands.Bot(
     description="Discord Bot Jam 2 Bot"
 )
 
+client.remove_command('help')
+
 
 @client.event
 async def on_ready():
@@ -30,7 +32,7 @@ def GetKey():
 
 @client.command(
     description="Loads a cog (limited to developers)",
-    aliases=['load']
+    aliases=['Load', 'load']
 )
 async def _Load(ctx, extension):
     # this if statement VV can we do something about it?
@@ -41,7 +43,7 @@ async def _Load(ctx, extension):
 
 @client.command(
     description="Unloads a cog (limited to developers)",
-    aliases=['unload', 'Unload']
+    aliases=['UnLoad', 'unload', 'Unload']
 )
 async def _UnLoad(ctx, extension):
     if ctx.author.id  == 467718535897022479 or ctx.author.id == 673573452694945862:  # noqa
@@ -51,7 +53,7 @@ async def _UnLoad(ctx, extension):
 
 @client.command(
     description="Reload a cog (limited to developers)",
-    aliases=['reload']
+    aliases=['Reload', 'reload']
 )
 async def _Reload(ctx, extension=None):
     if ctx.author.id  == 467718535897022479 or ctx.author.id == 673573452694945862:  # noqa
@@ -69,7 +71,7 @@ async def _Reload(ctx, extension=None):
 
 @client.command(
     description="List all cogs (not limited)",
-    aliases=['List']
+    aliases=['ListCogs', 'List']
 )
 async def _ListCogs(ctx):  # no need to check as it can't do anything.
     await ctx.send("Cogs in folder: ")
