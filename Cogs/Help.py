@@ -89,7 +89,7 @@ class Helps(commands.Cog):
                         value="List all cogs"
                     )
             elif Category.lower() == "settings":
-                if ctx.author.permissions_in(ctx.channel).administrator:
+                if ctx.author.permissions_in(ctx.channel).manage_guild:
                     embed.add_field(
                         name="Settings {settings, SETTINGS}, [Option]",
                         value="view or change settings."

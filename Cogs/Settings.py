@@ -15,7 +15,7 @@ class Settings(commands.Cog):
         self.view = False
         self.change = False
 
-    @has_permissions(administrator=True)
+    @has_permissions(manage_guild=True)
     @commands.command(aliases=['settings', 'SETTINGS'])
     async def Settings(self, ctx, option="None"):
         # option is for if they just want to go straight there
