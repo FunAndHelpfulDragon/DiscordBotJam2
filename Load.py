@@ -33,5 +33,6 @@ class LoadFile:
         file.write(text)
         file.close()
 
-    def Test(self):  # test (just in case)
+    @staticmethod
+    def Test():  # test (just in case)
         print("TEST")
