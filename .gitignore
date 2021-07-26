@@ -1,5 +1,6 @@
 Key.txt
 Files/*.server
+Files/DNA/*.user
 __pycache__
 .idea
 Cogs/__pycache__
