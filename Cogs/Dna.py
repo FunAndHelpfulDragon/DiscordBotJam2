@@ -64,6 +64,26 @@ class Dna(commands.Cog):
             gen.RmInv(ctx.author, Position)
             await ctx.reply(embed=gen.LoadInv(ctx.author, 'Strands'))
 
+    @start.error
+    async def start_fail_Error(self, ctx, error):
+        ctx.send("There was a failure whilst starting a new game, please try again\n If it happens again, please alert on of the owners")  # noqa
+        print(f"{ctx.author}:start->{error}")
+
+    @Inventory.error
+    async def Inventory_fail_Error(self, ctx, error):
+        ctx.send("There was an error whilst trying to show your inventory, please try again\n If it happens again, please alert on of the owners")  # noqa
+        print(f"{ctx.author}:Inventory->{error}")
+
+    @add.error
+    async def add_fail_error(self, ctx, error):
+        ctx.send("There was an error whilst adding a strand to your dna,  please try again\n If it happens again, please alert on of the owners")  # noqa
+        print(f"{ctx.author}:add->{error}")
+
+    @remove.error
+    async def remove_fail_error(self, ctx, error):
+        ctx.send("There was an error whilst removing a strand from your dna,  please try again\n If it happens again, please alert on of the owners")  # noqa
+        print(f"{ctx.author}:remove->{error}")
+
 
 # setups the cog for use.
 def setup(client):
