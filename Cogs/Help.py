@@ -105,12 +105,16 @@ class Helps(commands.Cog):
                     value="Help?"
                 )
                 embed.add_field(
-                    name="Credit",
+                    name="Credit {credit}",
                     value="Shows Credits"
+                )
+                embed.add_field(
+                    name="About {about}",
+                    value="Some information about the bot"
                 )
             elif Category.lower() == "test":
                 embed.add_field(
-                    name="Ping",
+                    name="Ping {ping, Ping!}",
                     value="Shows your ping to the bot."
                 )
             embed.set_footer(text="Usage:\n" +
