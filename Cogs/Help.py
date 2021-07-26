@@ -117,6 +117,11 @@ class Helps(commands.Cog):
                                   "{} = aliases (another way of using command) \n" +  # noqa
                                   "<> = Required \n" +
                                   "[] = Optional")
+            if not embed.fields:
+                embed.add_field(
+                    name="Woops!",
+                    value="Either, this is not a valid category or you are missing permissions to view this category."  # noqa
+                )
             await ctx.send(embed=embed)
 
     @commands.command(aliases=['About'])
