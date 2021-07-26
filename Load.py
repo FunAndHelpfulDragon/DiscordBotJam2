@@ -9,7 +9,7 @@ class LoadFile:
     @staticmethod
     def Load(Name, user):  # loads file
         if user:
-            file_name: str = f"Files/DNA/{Name}.user"
+            file_name: str = f"Files/DNA/{Name}.user"  # dna
         else:
             file_name: str = f"Files/{Name}.server"
         if not path.exists(file_name):
@@ -25,7 +25,7 @@ class LoadFile:
 
     def Info(self, Name, Info, user=False):  # get info about setting
         file = self.Load(Name, user)
-        if Info == "FILE§":
+        if Info == "FILE§":  # return whole file. (don't know why we might want it but it is there if we do)  # noqa
             return file
         for line in file:
             if line.split(" ")[0] == Info:
@@ -42,7 +42,7 @@ class LoadFile:
                 text += line
             with open(f"Files/{Name}.server", 'w') as file:  # open and write
                 file.write(text)
-        else:
+        else:  # dna saving, same thing different dir. Combine?
             text = ""
             for line in file:
                 if line.split(" ")[0] == Info:
@@ -51,13 +51,13 @@ class LoadFile:
             with open(F"Files/DNA/{Name}.user", 'w') as f:
                 f.write(text)
 
-    def Del(self, Name, user=False):
+    def Del(self, Name, user=False):  # delete file
         if user:
             os.remove(f"Files/DNA/{Name}.user")
         else:
             os.remove(f"Files/{Name}.server")
 
-    def Check(self, ff1, ff2):
+    def Check(self, ff1, ff2):  # check if 2 files have the same content
         try:
             if path.samefile(ff1, ff2):
                 return True

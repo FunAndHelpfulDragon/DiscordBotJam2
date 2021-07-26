@@ -10,12 +10,13 @@ class Dna(commands.Cog):
     def __init__(self, client):  # init this script
         self.client = client
 
-    @commands.command()
+    @commands.command(aliases=['Start'])
     async def start(self, ctx):
         gen = g.Generation(ctx.author)  # change location
-        if gen.GetInfo(ctx.author):
+        if gen.GetInfo(ctx.author):  # checks if they already have game
             await ctx.send("We have detected you already have a save, would you like to start again?")  # noqa
 
+            # see if they want to make a new game
             def check(m):
                 return m.channel == ctx.channel and m.author == ctx.author
 
@@ -25,24 +26,27 @@ class Dna(commands.Cog):
                     await result.reply("Your save has been reset, use `!start` to get a new save")  # noqa
             elif result.content.lower() == "no":
                 await ctx.send("Please use `COMMAND` to play")
-        else:
+        else:  # makes a new game (remove/change else?)
             gen.Random(ctx.author, 7)
             await ctx.reply(embed=gen.LoadInv(ctx.author))
             await ctx.reply(embed=gen.LoadInv(ctx.author, 'Strands'))
 
     @commands.command(aliases=['Inv', 'inv', 'inventory'])
-    async def Inventory(self, ctx):
+    async def Inventory(self, ctx):  # views their inventory
         gen = g.Generation(ctx.author)  # change location
         await ctx.reply(embed=gen.LoadInv(ctx.author))
         await ctx.reply(embed=gen.LoadInv(ctx.author, 'Strands'))
 
-    @commands.command()
+    @commands.command(aliases=['Add'])
+    # adds a strand to their dna
     async def add(self, ctx, Colour=None, Place=None):
+        # checks
         if Colour is None:
             await ctx.reply("Please pick a colour")
         if Place is None or int(Place) < 0:
             await ctx.reply("Please pick a positive interager")
         gen = g.Generation(ctx.author)  # change location
+        # add
         if Colour in gen.Inv(ctx.author, 'Inventory'):
             await ctx.reply("You do have this colour in your inventory!", mention_author=False)  # noqa
             gen.addInv(ctx.author, Colour, Place)
@@ -50,13 +54,15 @@ class Dna(commands.Cog):
         else:
             await ctx.reply("You do not have this colour in your inventory!")
 
-    @commands.command()
+    @commands.command(aliases=['Remove', 'rm'])
+    # removes strand from dna
     async def remove(self, ctx, Position=None):
         gen = g.Generation(ctx.author)  # change location
         if Position is None:
             await ctx.reply("Please enter a positive interager for the strand you want to take out")  # noqa
-        gen.RmInv(ctx.author, Position)
-        await ctx.reply(embed=gen.LoadInv(ctx.author, 'Strands'))
+        else:
+            gen.RmInv(ctx.author, Position)
+            await ctx.reply(embed=gen.LoadInv(ctx.author, 'Strands'))
 
 
 # setups the cog for use.
