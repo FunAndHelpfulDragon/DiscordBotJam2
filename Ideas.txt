@@ -1,3 +1,6 @@
 1. A discord bot  (or something else) that you have just found and have to look after. Every time you do something well, the bot will add it to a file. Once you have got XXX things the bot will regenerate into a new generation. (Like doctor who)
 2. https://www.youtube.com/watch?v=o1IheoDRdGE&t=7s
 3. an PvE game where every round you get to change one of your stats based on coins that you get from the previous rounds. The more score the more you can change. You can also loose coins by doing bad.
+
+4. Running simulator, where ai has to try and get the furest possible in shortest time. User can vote on an ai out of all born ai's. After generation weakest Ai's die, if yours was not in the weakest you get rewarded, if it was you get punished.
+5. DNA - start a new game (in a new save slot (max save slots of 3)), At start, you have strands of dna (randomly chosen) which you can put into a peice of dna. Each strand has a different effect on the ai. After every generation (maybe something to do with the above), If you succeed you get a new piece of strand where you can either add (unless full) or change with a previous strand. If you fail in that generation, then something bad (punishment) could happen (e.g. You loose a strand).
