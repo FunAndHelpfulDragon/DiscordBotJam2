@@ -18,9 +18,8 @@ class Test(commands.Cog):
         # NOTE: this is from old code that i have so there might be a better version.  # noqa
         # and we are in a cog so. if you find a better way, please replace this
 
-        start = d.timestamp(d.now())
-        msg = await ctx.send(content='Pinging')
-        await msg.edit(content=f'That took {round(( d.timestamp( d.now() ) - start ) * 1000) }ms') # noqa
+
+        await ctx.send(f"Pong! {self.client.latency*1000}ms") # noqa
 
 
 # setups the cog for use.

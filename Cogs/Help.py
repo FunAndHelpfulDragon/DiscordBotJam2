@@ -41,6 +41,10 @@ class Helps(commands.Cog):
                       "Credit: people who worked on this bot \n" +
                       "About: about this bot"
             )
+            embed.add_field(
+                name="Category: Test",
+                value="Ping: get your ping to the bot."
+            )
             return embed
 
         def AdminPerm(embed):
@@ -103,6 +107,11 @@ class Helps(commands.Cog):
                 embed.add_field(
                     name="Credit",
                     value="Shows Credits"
+                )
+            elif Category.lower() == "test":
+                embed.add_field(
+                    name="Ping",
+                    value="Shows your ping to the bot."
                 )
             embed.set_footer(text="Usage:\n" +
                                   "{} = aliases (another way of using command) \n" +  # noqa
