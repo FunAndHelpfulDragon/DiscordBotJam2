@@ -106,9 +106,9 @@ async def ListCogs_Fail_Error(ctx, error):
     print(error)
 
 
-for Cog in os.listdir("./Cogs"):
-    if Cog != "__pycache__":  # add no cogs here
-        client.load_extension(f'Cogs.{Cog[:-3]}')  # removes ".py" extension + loads cog  # noqa
-
-
-client.run(GetKey())  # runs bot
+if __name__ == '__main__':
+    for Cog in os.listdir("./Cogs"):
+        if Cog != "__pycache__":  # add no cogs here
+            client.load_extension(f'Cogs.{Cog[:-3]}')  # removes ".py" extension + loads cog  # noqa
+    
+    client.run(GetKey())  # runs bot
