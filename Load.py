@@ -1,21 +1,19 @@
-class LoadFile():
+from os import path
+
+
+class LoadFile:
     def __init__(self):
         print("Loading file")
 
-    def Load(self, Name):  # loads file
-        try:
-            file = open(f"Files/{Name}.server", 'r')  # trys to find it
-        except FileNotFoundError:  # fails and creates
-            file = open(f"Files/{Name}.server", 'a')
-            normal = open("Files/Settings", 'r')
-            file.write(normal.read())
-            normal.close()
-            file.close()  # can this be better?
-            file = open(f"Files/{Name}.server", 'r')
-        finally:  # read and return
-            r = file.readlines()
-            file.close()
-            return r
+    @staticmethod
+    def Load(Name):  # loads file
+        file_name: str = f"Files/{Name}.server"
+        if not path.exists(file_name):
+            with open(file_name, 'a') as file, open("Files/Settings", 'r') as normal:
+                file.write(normal.read())
+
+        with open(file_name, 'r') as file:
+            return file.readlines()
 
     def Info(self, Name, Info):  # get info about setting
         file = self.Load(Name)
