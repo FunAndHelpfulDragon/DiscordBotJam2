@@ -7,7 +7,7 @@ class Helps(commands.Cog):
         self.client = client
         print("Help setup")
 
-    @commands.command()
+    @commands.command(aliases=['creidt'])
     async def Credit(self, ctx):
         embed = discord.Embed(
             name="Credits",
@@ -26,7 +26,7 @@ class Helps(commands.Cog):
         # )
         await ctx.send(embed=embed)
 
-    @commands.command()
+    @commands.command(aliases=['help'])
     async def Help(self, ctx, Category=None):
         embed = discord.Embed(
             name="Help",
@@ -38,7 +38,8 @@ class Helps(commands.Cog):
             embed.add_field(
                 name="Category: Help",
                 value="Help: this command \n" +
-                      "Credit: people who worked on this bot"
+                      "Credit: people who worked on this bot \n" +
+                      "About: about this bot"
             )
             return embed
 
@@ -108,6 +109,17 @@ class Helps(commands.Cog):
                                   "<> = Required \n" +
                                   "[] = Optional")
             await ctx.send(embed=embed)
+
+    @commands.command(aliases=['About'])
+    async def about(self, ctx):
+        embed = discord.Embed(
+            colour=discord.Colour.random()
+        )
+        embed.add_field(
+            name="About",
+            value="This is a bot made for the discord bot jam 2 (https://itch.io/dbj2) designed by: dragmine149#5048"  # and Guy_372#4809."  # noqa
+        )
+        await ctx.send(embed=embed)
 
 
 def setup(client):
