@@ -6,7 +6,7 @@ Lo = L.LoadFile()
 prefixs = "!", "/",  # "BOT PING HERE"
 
 
-def get_prefix(client, message):
+async def get_prefix(client, message):
     result = Lo.Info(message.guild.id, "prefix")
     print(result)
     return result
