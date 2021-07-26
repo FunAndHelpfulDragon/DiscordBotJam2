@@ -2,3 +2,4 @@ Key.txt
 Files/*.server
 __pycache__
 .idea
+Cogs/__pycache__
