@@ -1,5 +1,4 @@
 # import discord
-from datetime import datetime as d
 from discord.ext import commands
 
 
@@ -15,10 +14,6 @@ class Test(commands.Cog):
     )
     async def _Ping(self, ctx):  # requires self as in class
         # returns the ping
-        # NOTE: this is from old code that i have so there might be a better version.  # noqa
-        # and we are in a cog so. if you find a better way, please replace this
-
-
         await ctx.send(f"Pong! {self.client.latency*1000}ms") # noqa
 
 
