@@ -9,7 +9,7 @@ class LoadFile:
     def Load(Name):  # loads file
         file_name: str = f"Files/{Name}.server"
         if not path.exists(file_name):
-            with open(file_name, 'a') as file, open("Files/Settings", 'r') as normal:
+            with open(file_name, 'a') as file, open("Files/Settings", 'r') as normal:  # noqa
                 file.write(normal.read())
 
         with open(file_name, 'r') as file:
