@@ -13,7 +13,7 @@ def get_prefix(client, message):
 
 
 client = commands.Bot(
-    command_prefix=(get_prefix),
+    command_prefix=get_prefix,
     description="Discord Bot Jam 2 Bot"
 )
 
