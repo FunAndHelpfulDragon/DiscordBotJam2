@@ -132,9 +132,10 @@ class Generation:
         if S[Position] == "":
             S[Position] = Colour  # add colour
             print(S)
-            C = str(S).replace(" ", "")  # CONVERTS INTO SAVEABLE FORMAT (spaces make it break)  # noqa
-            Lo.Save(author.id, 'Strands', C, True)
-            Inv.index(Colour) == ""
+            S = str(S).replace(" ", "")  # CONVERTS INTO SAVEABLE FORMAT (spaces make it break)  # noqa
+            Lo.Save(author.id, 'Strands', S, True)
+            Pos = Inv.index(Colour)
+            Inv[Pos] = ""
             Inv = str(Inv).replace(" ", "")
             Lo.Save(author.id, 'Inventory', Inv, True)
             print("---")
