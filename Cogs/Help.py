@@ -45,6 +45,15 @@ class Helps(commands.Cog):
                 name="Category: Test",
                 value="Ping: get your ping to the bot."
             )
+            embed.add_field(
+                name="Category: DNA",
+                value="THE MAIN PART OF THE BOT!\n" +
+                      "start: starts a simulator (saves as well!)\n" +
+                      "Inventory: views your inventory of that simulation\n" +
+                      "add: Add a strand to the dna\n" +
+                      "remove: Remove a strand from the dna",
+                inline=False
+            )
             return embed
 
         def AdminPerm(embed):
@@ -116,6 +125,23 @@ class Helps(commands.Cog):
                 embed.add_field(
                     name="Ping {ping, Ping!}",
                     value="Shows your ping to the bot."
+                )
+            elif Category.lower() == "dna":
+                embed.add_field(
+                    name="start {Start}",
+                    value="Start a simulation (game thing), Personal and saves"
+                )
+                embed.add_field(
+                    name="Inventory {Inv, inv, inventory}",
+                    value="Views your inventory. (need to do `!start` to get it setup first)"  # noqa
+                )
+                embed.add_field(
+                    name="add {Add} <Colour> <Place>",
+                    value="Adds a strand from your inventory of colour to Place in dna"  # noqa
+                )
+                embed.add_field(
+                    name="remove {Remove, rm} <Place>",
+                    value="Removes a strand from the dna at place and puts it back into your inventory"  # noqa
                 )
             embed.set_footer(text="Usage:\n" +
                                   "{} = aliases (another way of using command) \n" +  # noqa
