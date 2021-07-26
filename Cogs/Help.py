@@ -19,11 +19,11 @@ class Helps(commands.Cog):
             value="Owner, Programming.",
             inline=True
         )
-        # embed.add_field(
-        #     name="Guy_732#4809",
-        #     value="Programming.",
-        #     inline=True
-        # )
+        embed.add_field(
+            name="Guy_732#4809",
+            value="Programming.",
+            inline=True
+        )
         await ctx.send(embed=embed)
 
     @commands.command(aliases=['help'])
@@ -126,7 +126,7 @@ class Helps(commands.Cog):
         )
         embed.add_field(
             name="About",
-            value="This is a bot made for the discord bot jam 2 (https://itch.io/dbj2) designed by: dragmine149#5048"  # and Guy_372#4809."  # noqa
+            value="This is a bot made for the discord bot jam 2 (https://itch.io/dbj2) designed by: dragmine149#5048 and Guy_372#4809."  # noqa
         )
         await ctx.send(embed=embed)
 
