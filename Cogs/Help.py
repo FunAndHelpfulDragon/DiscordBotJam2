@@ -66,7 +66,7 @@ class Helps(commands.Cog):
 
         if Category is None:
             embed = NoPerm(embed)
-            if ctx.author.permissions_in(ctx.channel).administrator:
+            if ctx.author.permissions_in(ctx.channel).manage_guild:
                 embed = AdminPerm(embed)
             if ctx.author.id == 467718535897022479 or ctx.author.id == 673573452694945862:  # noqa
                 embed = BotOwner(embed)
