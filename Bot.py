@@ -3,8 +3,6 @@ import os
 import Load as L
 Lo = L.LoadFile()
 
-prefixs = "!", "/",  # "BOT PING HERE"
-
 
 def get_prefix(client, message):
     result = Lo.Info(message.guild.id, "prefix")
