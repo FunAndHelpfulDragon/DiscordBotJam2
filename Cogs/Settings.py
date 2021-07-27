@@ -16,7 +16,11 @@ class Settings(commands.Cog):
         self.change = False
 
     @has_permissions(manage_guild=True)
-    @commands.command(aliases=['settings', 'SETTINGS'])
+    @commands.command(
+        aliases=['settings', 'SETTINGS'],
+        help="Shows/changes settings. Current settings:\n" +
+        "Prefix"
+             )
     async def Settings(self, ctx, option="None"):
         # option is for if they just want to go straight there
         # XXX: add optional value for even quicker use (e.g. change prefix:

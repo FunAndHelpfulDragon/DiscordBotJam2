@@ -10,7 +10,10 @@ class Dna(commands.Cog):
     def __init__(self, client):  # init this script
         self.client = client
 
-    @commands.command(aliases=['Start'])
+    @commands.command(
+        aliases=['Start'],
+        help="Starts a game, Only 1 save file per user."
+    )
     async def start(self, ctx):
         gen = g.Generation(ctx.author)  # change location
         if gen.GetInfo(ctx.author):  # checks if they already have game
@@ -31,13 +34,19 @@ class Dna(commands.Cog):
             await ctx.reply(embed=gen.LoadInv(ctx.author))
             await ctx.reply(embed=gen.LoadInv(ctx.author, 'Strands'))
 
-    @commands.command(aliases=['Inv', 'inv', 'inventory'])
+    @commands.command(
+        aliases=['Inv', 'inv', 'inventory'],
+        help="Displays your inventory"
+    )
     async def Inventory(self, ctx):  # views their inventory
         gen = g.Generation(ctx.author)  # change location
         await ctx.reply(embed=gen.LoadInv(ctx.author))
         await ctx.reply(embed=gen.LoadInv(ctx.author, 'Strands'))
 
-    @commands.command(aliases=['Add'])
+    @commands.command(
+        aliases=['Add'],
+        help="Add a strand from your inventory to your dna"
+        )
     # adds a strand to their dna
     async def add(self, ctx, Colour=None, Place=None):
         # checks
@@ -54,7 +63,10 @@ class Dna(commands.Cog):
         else:
             await ctx.reply("You do not have this colour in your inventory!")
 
-    @commands.command(aliases=['Remove', 'rm'])
+    @commands.command(
+        aliases=['Remove', 'rm'],
+        help="Removes a strand from your dna and puts it in your inventory"
+        )
     # removes strand from dna
     async def remove(self, ctx, Position=None):
         gen = g.Generation(ctx.author)  # change location

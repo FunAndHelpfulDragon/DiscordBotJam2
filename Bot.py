@@ -5,9 +5,12 @@ Lo = L.LoadFile()
 
 
 async def get_prefix(client, message):
-    result = Lo.Info(message.guild.id, "prefix")
-    print(result)
-    return result
+    try:  # try except makes it work in dm's
+        result = Lo.Info(message.guild.id, "prefix")
+        print(result)
+        return result
+    except Exception:  # change exception?
+        return '!'
 
 
 client = commands.Bot(
@@ -18,61 +21,70 @@ client = commands.Bot(
 client.remove_command('help')
 
 
+# remove settings for server on leave?
+# @client.event
+# async def on_guild_remove(guild):
+#     if os.path.exists(f"Files/{guild}"):
+#         os.remove(f"Files/{guild}")
+
+
 @client.event
 async def on_ready():
     print("Bot is ready")
 
 
 def GetKey():
-    file = open("Key.txt", "r")  # reads the key
-    key = file.read()
-    file.close()
-    return key
+    with open("Key.txt", "r") as Key:  # reads the key
+        return Key.read()
 
 
 @client.command(
     description="Loads a cog (limited to developers)",
-    aliases=['Load', 'load']
+    aliases=['Load', 'load'],
+    hidden=True
 )
+@commands.is_owner()
 async def _Load(ctx, extension):
-    # this if statement VV can we do something about it?
-    if ctx.author.id == 467718535897022479 or ctx.author.id == 673573452694945862:  # noqa
-        client.load_extension(f'Cogs.{extension}')  # loads a cog
-        print(f'Cog: {extension} Loaded')
+    client.load_extension(f'Cogs.{extension}')  # loads a cog
+    print(f'Cog: {extension} Loaded')
 
 
 @client.command(
     description="Unloads a cog (limited to developers)",
-    aliases=['UnLoad', 'unload', 'Unload']
+    aliases=['UnLoad', 'unload', 'Unload'],
+    hidden=True
 )
+@commands.is_owner()
 async def _UnLoad(ctx, extension):
-    if ctx.author.id  == 467718535897022479 or ctx.author.id == 673573452694945862:  # noqa
-        client.unload_extension(f'Cogs.{extension}')  # unloads a cog
-        print(f'Cog: {extension} Unloaded')
+    client.unload_extension(f'Cogs.{extension}')  # unloads a cog
+    print(f'Cog: {extension} Unloaded')
 
 
 @client.command(
     description="Reload a cog (limited to developers)",
-    aliases=['Reload', 'reload']
+    aliases=['Reload', 'reload'],
+    hidden=True
 )
+@commands.is_owner()
 async def _Reload(ctx, extension=None):
-    if ctx.author.id  == 467718535897022479 or ctx.author.id == 673573452694945862:  # noqa
-        if extension is not None:
-            client.unload_extension(f'Cogs.{extension}')
-            client.load_extension(f'Cogs.{extension}')
-            await ctx.send(f"Reloaded {extension}")
-        else:
-            for Cog in os.listdir("./Cogs"):
-                if Cog != "__pycache__":  # add no cogs here
-                    client.unload_extension(f'Cogs.{Cog[:-3]}')
-                    client.load_extension(f'Cogs.{Cog[:-3]}')
-            await ctx.send("Reloaded cogs")
+    if extension is not None:
+        client.unload_extension(f'Cogs.{extension}')
+        client.load_extension(f'Cogs.{extension}')
+        await ctx.send(f"Reloaded {extension}")
+    else:
+        for Cog in os.listdir("./Cogs"):
+            if Cog != "__pycache__":  # add no cogs here
+                client.unload_extension(f'Cogs.{Cog[:-3]}')
+                client.load_extension(f'Cogs.{Cog[:-3]}')
+        await ctx.send("Reloaded cogs")
 
 
 @client.command(
     description="List all cogs (not limited)",
-    aliases=['ListCogs', 'List']
+    aliases=['ListCogs', 'List'],
+    hidden=True
 )
+@commands.is_owner()
 async def _ListCogs(ctx):  # no need to check as it can't do anything.
     await ctx.send("Cogs in folder: ")
     for filename in os.listdir("./Cogs"):
@@ -84,25 +96,21 @@ async def _ListCogs(ctx):  # no need to check as it can't do anything.
 # XXX: make it so that we know the cog that failed to load.
 @_Load.error
 async def Load_Fail_Error(ctx, error):
-    await ctx.send("There was an error whilst loading the cog.")
     print(error)
 
 
 @_UnLoad.error
 async def UnLoad_Fail_Error(ctx, error):
-    await ctx.send("There was an error whilst unloading the cog.")
     print(error)
 
 
 @_Reload.error
 async def Reload_Fail_Error(ctx, error):
-    await ctx.send("There was an error whilst trying to reload the cog.")
     print(error)
 
 
 @_ListCogs.error
 async def ListCogs_Fail_Error(ctx, error):
-    await ctx.send("There was an errpr whilst listing the cogs")
     print(error)
 
 
