@@ -5,3 +5,4 @@ __pycache__
 .idea
 Cogs/__pycache__
 *.pyc
+*.DS_Store

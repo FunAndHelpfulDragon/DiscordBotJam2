@@ -25,22 +25,23 @@ class LoadFile:
 
     def Info(self, Name, Info, user=False):  # get info about setting
         file = self.Load(Name, user)
-        if Info == "FILE§":  # return whole file. (don't know why we might want it but it is there if we do)  # noqa
-            return file
         for line in file:
-            if line.split(" ")[0] == Info:
+            if line.split(" ")[0].lower() == Info.lower():
                 result = line.split(" ")[1]  # check Files/Settings
                 return result.rstrip('\n')  # return info
 
     def Save(self, Name, Info, New, user=False):  # save new settings
+        print(Name, Info, New, user)
         file = self.Load(Name, user)
         if not user:
             text = ""
+            print(file)
             for line in file:  # for text
                 if line.split(" ")[0] == Info:  # if setting found
-                    line = f"{Info} {New}"  # replace setting with new setting
+                    line = f"{Info} {New}\n"  # replace setting with new settin
                 text += line
             with open(f"Files/{Name}.server", 'w') as file:  # open and write
+                print(text)
                 file.write(text)
         else:  # dna saving, same thing different dir. Combine?
             text = ""
