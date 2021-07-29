@@ -1,7 +1,11 @@
 from discord.ext import commands
-from dpyConsole import Console
-import os
-import Load as L
+
+ConsoleCheck = input("Check for console input? (y = yes, n = no):")
+if ConsoleCheck.lower() == "y":
+    from dpyConsole import Console
+
+import os  # noqa
+import Load as L  # noqa
 Lo = L.LoadFile()
 
 
@@ -18,7 +22,8 @@ client = commands.Bot(
     command_prefix=get_prefix,
     description="Discord Bot Jam 2 Bot"
 )
-my_console = Console(client)
+if ConsoleCheck.lower() == "y":
+    my_console = Console(client)
 
 client.remove_command('help')
 
@@ -29,20 +34,21 @@ client.remove_command('help')
 #     if os.path.exists(f"Files/{guild}"):
 #         os.remove(f"Files/{guild}")
 
-@my_console.command()
-async def Notify(message):
-    print("Sending message to discord")
-    print(os.walk("Files"))
-    print("2")
-    for r, d, file in os.walk("Files/"):
-        for file in file:
-            print(file)
-            if file.endswith(".server"):
-                print(f"{file} ends with '.server'")
-                if Lo.Info(file[:-7], 'Notifications').lower() != "off":
-                    Channel = int(Lo.Info(file[:-7], 'Notifications'))
-                    channel = client.get_channel(Channel)
-                    await channel.send(message)
+if ConsoleCheck.lower() == "y":
+    @my_console.command()
+    async def Notify(message):
+        print("Sending message to discord")
+        print(os.walk("Files"))
+        print("2")
+        for r, d, file in os.walk("Files/"):
+            for file in file:
+                print(file)
+                if file.endswith(".server"):
+                    print(f"{file} ends with '.server'")
+                    if Lo.Info(file[:-7], 'Notifications').lower() != "off":
+                        Channel = int(Lo.Info(file[:-7], 'Notifications'))
+                        channel = client.get_channel(Channel)
+                        await channel.send(message)
 
 
 @client.event
@@ -136,5 +142,6 @@ if __name__ == '__main__':
         if Cog != "__pycache__" and Cog != ".DS_Store":  # add no cogs here
             client.load_extension(f'Cogs.{Cog[:-3]}')  # removes ".py" extension + loads cog  # noqa
 
-    my_console.start()
+    if ConsoleCheck.lower() == "y":
+        my_console.start()
     client.run(GetKey())  # runs bot
