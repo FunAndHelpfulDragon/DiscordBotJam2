@@ -19,7 +19,9 @@ class Settings(commands.Cog):
     @commands.command(
         aliases=['settings', 'SETTINGS'],
         help="Shows/changes settings. Current settings:\n" +
-        "Prefix"
+        "Prefix,\n" +
+        "Notifications,\n" +
+        "NC (Notifications Channel)"
              )
     async def Settings(self, ctx, option="None"):
         # option is for if they just want to go straight there
@@ -31,14 +33,16 @@ class Settings(commands.Cog):
                     colour=discord.Colour.red())  # setting to change?
             embed.add_field(  # automatic?
                     name="Settings",
-                    value=f"Prefix: {Lo.Info(ctx.guild.id, 'prefix')}",  # better way than putting them all here?  # noqa
+                    value=f"Prefix: {Lo.Info(ctx.guild.id, 'prefix')}\n" +
+                          f"Notifications: {Lo.Info(ctx.guild.id, 'notifications')}\n" +  # noqa
+                          f"Notifications Channel: {Lo.Info(ctx.guild.id, 'nc')}",  # better way than putting them all here?  # noqa
                     )
             embed.set_footer(text="Tip: you can use !settings view or !settings change to view/change settings without having to say change/view after !settings")  # noqa
             await ctx.send(embed=embed)
 
         async def change():
             await ctx.send("What setting would you like to change?:")  # asks
-            await ctx.send("Options: Prefix")
+            await ctx.send("Options: Prefix, Notifications, NC (Notifications channel)")  # noqa
 
             def ccheck(m):  # checks
                 return m.channel == ctx.channel

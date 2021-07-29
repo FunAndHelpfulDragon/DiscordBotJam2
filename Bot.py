@@ -1,4 +1,5 @@
 from discord.ext import commands
+from dpyConsole import Console
 import os
 import Load as L
 Lo = L.LoadFile()
@@ -17,6 +18,7 @@ client = commands.Bot(
     command_prefix=get_prefix,
     description="Discord Bot Jam 2 Bot"
 )
+my_console = Console(client)
 
 client.remove_command('help')
 
@@ -26,6 +28,21 @@ client.remove_command('help')
 # async def on_guild_remove(guild):
 #     if os.path.exists(f"Files/{guild}"):
 #         os.remove(f"Files/{guild}")
+
+@my_console.command()
+async def Notify(message):
+    print("Sending message to discord")
+    print(os.walk("Files"))
+    print("2")
+    for r, d, file in os.walk("Files/"):
+        for file in file:
+            print(file)
+            if file.endswith(".server"):
+                print(f"{file} ends with '.server'")
+                if Lo.Info(file[:-7], 'notifications').lower() == "true":
+                    Channel = int(Lo.Info(file[:-7], 'nc'))
+                    channel = client.get_channel(Channel)
+                    await channel.send(message)
 
 
 @client.event
@@ -119,4 +136,5 @@ if __name__ == '__main__':
         if Cog != "__pycache__":  # add no cogs here
             client.load_extension(f'Cogs.{Cog[:-3]}')  # removes ".py" extension + loads cog  # noqa
 
+    my_console.start()
     client.run(GetKey())  # runs bot
