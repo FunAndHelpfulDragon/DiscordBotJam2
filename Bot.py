@@ -133,7 +133,7 @@ async def ListCogs_Fail_Error(ctx, error):
 
 if __name__ == '__main__':
     for Cog in os.listdir("./Cogs"):
-        if Cog != "__pycache__":  # add no cogs here
+        if Cog != "__pycache__" and Cog != ".DS_Store":  # add no cogs here
             client.load_extension(f'Cogs.{Cog[:-3]}')  # removes ".py" extension + loads cog  # noqa
 
     my_console.start()
