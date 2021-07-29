@@ -39,8 +39,8 @@ async def Notify(message):
             print(file)
             if file.endswith(".server"):
                 print(f"{file} ends with '.server'")
-                if Lo.Info(file[:-7], 'notifications').lower() == "true":
-                    Channel = int(Lo.Info(file[:-7], 'nc'))
+                if Lo.Info(file[:-7], 'Notifications').lower() != "off":
+                    Channel = int(Lo.Info(file[:-7], 'Notifications'))
                     channel = client.get_channel(Channel)
                     await channel.send(message)
 
