@@ -8,8 +8,8 @@ class Helps(commands.Cog):
         print("Help setup")
 
     @commands.command(
-        aliases=['creidt'],
-        help="Shows owners of the bot",
+        aliases=['credit', 'credits'],
+        help="Shows who has helped on the bot",
         description="None"
     )
     async def Credit(self, ctx):
@@ -25,7 +25,7 @@ class Helps(commands.Cog):
         )
         embed.add_field(
             name="Guy_732#4809",
-            value="Programming. (tidied up some of the code for me, thanks)",
+            value="Programming. (tidied up some of the code for me, thanks. unfortunately that was all that was possibly in the time limit)",  # noqa
             inline=True
         )
         await ctx.send(embed=embed)
@@ -81,6 +81,9 @@ class Helps(commands.Cog):
                   "- The theme is hard, so this bot took a while to make.\n" +
                   "- Getting the results is done by maths, Not by actually running a simulation. This is easier and quicker.\n" +  # noqa
                   "  Even though it is done like this, hopefully you can see how it still fits the theme."  # noqa
+        )
+        embed.set_footer(
+            text="Want to invite this bot? Do so here!: https://discord.com/api/oauth2/authorize?client_id=868506788666966056&permissions=2214718464&scope=bot"  # noqa
         )
         await ctx.send(embed=embed)
 

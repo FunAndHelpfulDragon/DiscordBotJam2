@@ -21,9 +21,9 @@ class Running:
     def Info(self, author, score):
         Y = score[0]
         score.sort()
-        if score.index(Y) < (len(score)/4):  # upper half
+        if score.index(Y) > (len(score)/2):  # upper half
             inv = g.Inv(author, "Inventory", True)
-            stra = g.Inv(author, 'Strands', True)
+            stra = g.Inv(author, 'DNA', True)
             option = g.Random("", 1, False)
             max = 1
             option[0] = option[0].replace(" ", "")
@@ -45,35 +45,40 @@ class Running:
             inv.append(s)
             if inv[0] == "":
                 del inv[0]
+                for x in range(len(inv), 10):
+                    inv.append('')
             ninv = str(inv).replace(" ", "")
             Lo.Save(author.id, 'Inventory', ninv, True)
-            return "New Item"
-        else:  # lower half
+            return "New Item", s
+        elif score.index(Y) == len(score):  # lower half
             inv = g.Inv(author, "Inventory", True)
+            rr = random.randint(0, len(inv))
+            rrr = inv[rr]
             if inv.count(inv[0]) == len(inv):
-                del inv[random.randint(0, len(inv))]
+                del inv[rr]
                 strinv = str(inv)
                 strinv = strinv.replace(" ", "")
                 Lo.Save(author.id, 'Inventory', strinv, True)
             else:
-                inv = g.Inv(author, "Strands", True)
-                del inv[random.randint(0, len(inv))]
+                inv = g.Inv(author, "DNA", True)
+                del inv[rr]
                 strinv = str(inv)
                 strinv = strinv.replace(" ", "")
-                Lo.Save(author.id, 'Strands', strinv, True)
-            return "Loss"
+                Lo.Save(author.id, 'DNA', strinv, True)
+            return "Loss", rrr
 
     def Sim(self, id, random=False):
-        info = g.Inv(id, "Strands", True)
-        if random:
-            strand = g.Random("", 1, False)
-            # pdb.set_trace()
-            while strand[0].replace(" ", "") in info:
-                # pdb.set_trace()
-                strand = g.Random("", 1, False)
-            # s = str(strand[0])
-            s = strand[0].replace(" ", "")
-            info.append(s)
+        # info = g.Inv(id, "DNA", True)
+        # if random:
+        #     strand = g.Random("", 1, False)
+        #     # pdb.set_trace()
+        #     while strand[0].replace(" ", "") in info:
+        #         # pdb.set_trace()
+        #         strand = g.Random("", 1, False)
+        #     # s = str(strand[0])
+        #     s = strand[0].replace(" ", "")
+        #     info.append(s)
+        info = g.Random("", 10, False)
         results = []
         results = self.Stats(info)
         Score = []
@@ -144,6 +149,7 @@ class Running:
                 Speed = Speed / 3600
                 Result = Speed * Time
                 Result = Result * (Nodes/2)
+                Result = Result * 100  # POSITIVE
                 return round(Result, 5)
                 # return Result
             # simulation (math basically) starts here

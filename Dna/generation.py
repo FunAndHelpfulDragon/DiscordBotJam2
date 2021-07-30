@@ -79,7 +79,7 @@ class Generation:
 
         if Option == "Inventory":
             option = f"Inventory - {len(Temp)} Items"
-        elif Option == "Strands":
+        elif Option == "DNA":
             option = f"{Option} \nYou have {len(Temp)}/{10} max available of {Option}"  # noqa
         print(option)
         # creates embed
@@ -92,7 +92,7 @@ class Generation:
         )
         if str(Temp) == str([]):  # checks if it's empty
             embed.add_field(
-                name="Oh, Oh",
+                name="Uh, Oh",
                 value="Seems like you haven't got anything in this Inventory"
             )
         else:
@@ -120,13 +120,13 @@ class Generation:
         # to position in dna
         Position = int(Position) - 1  # lists start at 1 for the user
         # load invs
-        S = self.Inv(author, 'Strands', True)
+        S = self.Inv(author, 'DNA', True)
         Inv = self.Inv(author, 'Inventory', True)
         # check if the position is empty
         if S[Position] == "":
             S[Position] = Colour  # add colour
             S = str(S).replace(" ", "")  # CONVERTS INTO SAVEABLE FORMAT (spaces make it break)  # noqa
-            Lo.Save(author.id, 'Strands', S, True)
+            Lo.Save(author.id, 'DNA', S, True)
             Pos = Inv.index(Colour)
             Inv[Pos] = ""
             Inv = str(Inv).replace(" ", "")
@@ -140,8 +140,8 @@ class Generation:
 
     def RmInv(self, author, Position):
         # takes a item from inputted position and puts it in user inventory
-        Position = int(Position) - 1
-        S = self.Inv(author, 'Strands', True)
+        Position = int(Position)  # - 1
+        S = self.Inv(author, 'DNA', True)
         Inv = self.Inv(author, 'Inventory', True)
         good = True
         # attempts to find empty spot
@@ -156,7 +156,7 @@ class Generation:
             S[Position] = ""
 
         S = str(S).replace(" ", "")
-        Lo.Save(author.id, 'Strands', S, True)
+        Lo.Save(author.id, 'DNA', S, True)
         Inv = str(Inv).replace(" ", "")
         Lo.Save(author.id, 'Inventory', Inv, True)
 

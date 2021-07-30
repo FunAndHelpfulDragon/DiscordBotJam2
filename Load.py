@@ -37,7 +37,7 @@ class LoadFile:
             text = ""
             print(file)
             for line in file:  # for text
-                if line.split(" ")[0] == Info:  # if setting found
+                if line.split(" ")[0].lower() == Info.lower():  # if setting found  # noqa
                     line = f"{Info} {New}\n"  # replace setting with new settin
                 text += line
             with open(f"Files/{Name}.server", 'w') as file:  # open and write
@@ -46,7 +46,7 @@ class LoadFile:
         else:  # dna saving, same thing different dir. Combine?
             text = ""
             for line in file:
-                if line.split(" ")[0] == Info:
+                if line.split(" ")[0].lower() == Info.lower():
                     line = f"{Info} {New}\n"
                 text += line
             with open(F"Files/DNA/{Name}.user", 'w') as f:
