@@ -96,7 +96,7 @@ async def _Reload(ctx, extension=None):
         await ctx.send(f"Reloaded {extension}")
     else:
         for Cog in os.listdir("./Cogs"):
-            if Cog != "__pycache__":  # add no cogs here
+            if Cog != "__pycache__" or Cog != ".DS_Store":  # add no cogs here
                 client.unload_extension(f'Cogs.{Cog[:-3]}')
                 client.load_extension(f'Cogs.{Cog[:-3]}')
         await ctx.send("Reloaded cogs")
@@ -111,7 +111,7 @@ async def _Reload(ctx, extension=None):
 async def _ListCogs(ctx):  # no need to check as it can't do anything.
     await ctx.send("Cogs in folder: ")
     for filename in os.listdir("./Cogs"):
-        if filename != "__pycache__":  # add no cogs here
+        if filename != "__pycache__" or filename == ".DS_Store":  # add no cogs
             await ctx.send(filename[:-3])
 
 

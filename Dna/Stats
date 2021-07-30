@@ -1,14 +1,14 @@
-Red
-Orange
-Yellow
-Light Green
-Green
-Dark Green
-Light Blue
-Blue
-Dark Blue
-Purple
-Pink
-White
-Black
-Grey
+S +10    # Speed
+E +5     # Energy
+N -2     # Nodes
+E +10
+E -4
+S -4
+S x2
+E +16
+E -16
+N +1
+N +2
+T +1    # Time
+Nu +0    # Nothing
+T x2

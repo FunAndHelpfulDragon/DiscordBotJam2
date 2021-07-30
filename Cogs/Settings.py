@@ -21,6 +21,7 @@ class Settings(commands.Cog):
         help="Shows/changes settings. Current settings:\n" +
         "Prefix,\n" +
         "Notifications (off = no notifications)\n",
+        description="`option`: None, view, Change"
              )
     async def Settings(self, ctx, option="None"):
         # option is for if they just want to go straight there

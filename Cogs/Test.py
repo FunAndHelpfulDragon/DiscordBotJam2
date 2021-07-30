@@ -9,10 +9,10 @@ class Test(commands.Cog):
     @commands.command(  # commands.command instead of client.command
         # same things can be put here though
         name="Ping",
-        description="Check your ping wiht the bot",
+        description="None",
         help="Check your ping with the bot",
         aliases=["ping", "Ping!"],
-        enabled=False
+        enabled=True
     )
     async def _Ping(self, ctx):  # requires self as in class
         # returns the ping

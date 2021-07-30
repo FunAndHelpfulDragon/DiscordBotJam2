@@ -1,0 +1,19 @@
+Running simulation:
+
+x- Ai generates up to X random bots
+x- Each bot has a random DNA
+x- Bots then compete to get --fasters/--furthest difference in --distance/--seconds
+- Weak bots die (ai tries not to generate them again)
+- Great bots make new bots.
+-x If your bot is in the 'weak' category you get punished: (loose strand, not able to change, )
+x- If your bot is in the 'great' category you get rewarded: (new strand, more space)
+
+
+
+Your Ai went XXX distance in YYY time
+and came ZZZ position.
+
+AAA% of the population died, and (unfortunately, fortunately) your ai came in
+ZZZ position and (survived / died)
+
+Your (reward/punishment) is BBB of Item.

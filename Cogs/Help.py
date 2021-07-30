@@ -9,7 +9,8 @@ class Helps(commands.Cog):
 
     @commands.command(
         aliases=['creidt'],
-        help="Shows owners of the bot"
+        help="Shows owners of the bot",
+        description="None"
     )
     async def Credit(self, ctx):
         embed = discord.Embed(
@@ -24,14 +25,15 @@ class Helps(commands.Cog):
         )
         embed.add_field(
             name="Guy_732#4809",
-            value="Programming.",
+            value="Programming. (tidied up some of the code for me, thanks)",
             inline=True
         )
         await ctx.send(embed=embed)
 
     @commands.command(
         aliases=['help'],
-        help="HELP! Here is HELP!"
+        help="HELP! Here is HELP!",
+        description="None"
         )
     async def Help(self, ctx):
         Mbeds = []
@@ -47,8 +49,8 @@ class Helps(commands.Cog):
                 for command in self.client.get_cog(cog).get_commands():
                     if command.enabled:  # checks if enabled (there are some disabled)  # noqa
                         Tbed.add_field(
-                            name=f"{command.name} {command.aliases}",  # name, aliases (would also be nice for auto other (required/not) options)  # noqa
-                            value=f"Help:{command.help}",  # help
+                            name=f"{command.name} {command.aliases} ({command.description})",  # name, aliases (would also be nice for auto other (required/not) options)  # noqa
+                            value=f"Help: {command.help}",  # help
                         )
                 if str(Tbed.fields) == str([]):  # checks if no field
                     Tbed.add_field(
@@ -56,7 +58,8 @@ class Helps(commands.Cog):
                         value="Seems like all the commands in this cog have been disabled."  # noqa
                     )
                 Tbed.set_footer(  # help (info)
-                    text="[] = aliases"
+                    text="[] = aliases,\n" +
+                         "() = arguments (inputs)"
                 )
                 Mbeds.append(Tbed)
         for embed in Mbeds:  # send all embeds
@@ -64,7 +67,8 @@ class Helps(commands.Cog):
 
     @commands.command(
         aliases=['About'],
-        help="Shows information about the bot"
+        help="Shows information about the bot",
+        description="None"
     )
     async def about(self, ctx):
         embed = discord.Embed(
@@ -72,7 +76,11 @@ class Helps(commands.Cog):
         )
         embed.add_field(
             name="About",
-            value="This is a bot made for the discord bot jam 2 (https://itch.io/dbj2) designed by: dragmine149#5048 and Guy_372#4809."  # noqa
+            value="This is a bot made for the discord bot jam 2 (https://itch.io/dbj2) designed by: dragmine149#5048 and Guy_372#4809.\n" +  # noqa
+                  "NOTES:\n" +
+                  "- The theme is hard, so this bot took a while to make.\n" +
+                  "- Getting the results is done by maths, Not by actually running a simulation. This is easier and quicker.\n" +  # noqa
+                  "  Even though it is done like this, hopefully you can see how it still fits the theme."  # noqa
         )
         await ctx.send(embed=embed)
 

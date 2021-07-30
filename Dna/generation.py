@@ -8,12 +8,12 @@ Lo = Load.LoadFile()
 
 
 class Generation:
-    def __init__(self, user):
+    def __init__(self, user=0):
         # can i change the 'author' in the functions to 'self.user'?
         self.user = user
 
     def GetInfo(self, author):  # checks if they have a dna already
-        if Lo.Check(f"Files/DNA/{author.id}.user", "Dna/Stats"):
+        if Lo.Check(f"Files/DNA/{author.id}.user", "Dna/Colours"):
             return None
         return True
 
@@ -21,25 +21,29 @@ class Generation:
         Lo.Del(author.id, True)
         return True
 
-    def Random(self, author, number):  # gives user number of strands (to start with)  # noqa
+    def Random(self, author, number, save=True):  # gives user number of strands (to start with)  # noqa
         # loads Strands
         Temp = []
-        with open("DNA/Stats", 'r') as Stats:
-            file = Stats.readlines()
-            while len(Temp) < 7: # makes sure they have atleast 7 strands to start with (change?)  # noqa
+        with open("DNA/Colours", 'r') as Colours:
+            file = Colours.readlines()
+            while len(Temp) < number: # makes sure they have atleast number strands to start with (change?)  # noqa
                 result = random.randint(0, len(file) - 1)
                 try:
                     Temp.index(file[result].rstrip('\n'))
                 except ValueError:
                     Temp.append(file[result].rstrip('\n'))
 
-        Lo.Save(author.id, 'Inventory', str(Temp).replace(" ", ""), True)
+        if save:
+            Lo.Save(author.id, 'Inventory', str(Temp).replace(" ", ""), True)
+        else:
+            return Temp
 
     def Inv(self, author, Option, sss=False):  # makes a table of their inventory  # noqa
         if Option is None:  # inventory or strands
             Option = "Inventory"
-        print(Option)
-        Inv = Lo.Info(author.id, Option, True)  # gets
+        if type(author) != int:
+            author = author.id
+        Inv = Lo.Info(author, Option, True)  # gets
         Lnv = Inv.split(",")
         Temp = []
         for s in Lnv:  # for Item
@@ -47,9 +51,6 @@ class Generation:
             s1 = s.replace("'", "")
             s1 = s1.replace("[", "")
             s1 = s1.replace("]", "")
-            print(s1)
-            print(s)
-            print(Lnv)
             # the 'sss' makes it so it depends where the items go
             # when 'sss' is false, the items will just be in the table one
             # after another without any gaps. Useful for display items (without
@@ -62,7 +63,6 @@ class Generation:
             else:
                 Temp.append(s1)
 
-        print(Temp)
         return Temp
 
     def LoadInv(self, author, Option=None):
@@ -80,7 +80,7 @@ class Generation:
         if Option == "Inventory":
             option = f"Inventory - {len(Temp)} Items"
         elif Option == "Strands":
-            option = f"{Option} \nYou have {len(Temp)}/{10} max alvalible of {Option}"  # noqa
+            option = f"{Option} \nYou have {len(Temp)}/{10} max available of {Option}"  # noqa
         print(option)
         # creates embed
         embed = discord.Embed(
@@ -90,15 +90,12 @@ class Generation:
             descript=f"Your {option}",
             colour=discord.Colour.random()
         )
-        print(Temp)
         if str(Temp) == str([]):  # checks if it's empty
-            print("a")
             embed.add_field(
                 name="Oh, Oh",
                 value="Seems like you haven't got anything in this Inventory"
             )
         else:
-            print("b")
             # shows list of strands (and their actrual position)
             for Strand in Temp2:
                 if Strand != "":
@@ -109,7 +106,7 @@ class Generation:
                     embed.add_field(
                         name=f"{Strand} (Pos:{int(Temp2.index(Strand)) + 1})",
                         value="Unknown",
-                        inline=False
+                        # inline=False
                     )
         # information
         embed.set_footer(
@@ -122,23 +119,18 @@ class Generation:
         # and moves that colour from inventory
         # to position in dna
         Position = int(Position) - 1  # lists start at 1 for the user
-        print("---")
         # load invs
         S = self.Inv(author, 'Strands', True)
         Inv = self.Inv(author, 'Inventory', True)
-        print("-")
-        print(S)
         # check if the position is empty
         if S[Position] == "":
             S[Position] = Colour  # add colour
-            print(S)
             S = str(S).replace(" ", "")  # CONVERTS INTO SAVEABLE FORMAT (spaces make it break)  # noqa
             Lo.Save(author.id, 'Strands', S, True)
             Pos = Inv.index(Colour)
             Inv[Pos] = ""
             Inv = str(Inv).replace(" ", "")
             Lo.Save(author.id, 'Inventory', Inv, True)
-            print("---")
         else:
             # if, there is an item there already. THe user will be required to
             # remove the item before adding another item.
@@ -149,15 +141,12 @@ class Generation:
     def RmInv(self, author, Position):
         # takes a item from inputted position and puts it in user inventory
         Position = int(Position) - 1
-        print("---")
         S = self.Inv(author, 'Strands', True)
         Inv = self.Inv(author, 'Inventory', True)
-        print("-")
         good = True
         # attempts to find empty spot
         for X in range(0, len(Inv)):
             if not Inv[X]:
-                print(X)
                 Inv[X] = S[Position]
                 S[Position] = ""
                 good = False
@@ -170,3 +159,10 @@ class Generation:
         Lo.Save(author.id, 'Strands', S, True)
         Inv = str(Inv).replace(" ", "")
         Lo.Save(author.id, 'Inventory', Inv, True)
+
+    def Bot(self, number, Dna):
+        # strands = order of strand(S) in dna
+        dna = []
+        for x in range(0, Dna):  # generates X bots
+            dna.append(self.Random("", number, False))  # with random dna
+        return dna
