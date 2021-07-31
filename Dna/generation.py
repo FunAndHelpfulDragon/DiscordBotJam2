@@ -24,7 +24,7 @@ class Generation:
     def Random(self, author, number, save=True, Start=False):  # gives user number of strands (to start with)  # noqa
         # loads Strands
         Temp = []
-        with open("DNA/Colours", 'r') as Colours:
+        with open("Dna/Colours", 'r') as Colours:
             file = Colours.readlines()
             if Start:
                 Temp.append("red")
