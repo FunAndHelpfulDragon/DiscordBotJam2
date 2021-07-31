@@ -14,3 +14,17 @@ Nu +0    # Nothing
 T x2
 E +10
 T +3
+S +5
+Nu +0
+S x3
+T +2
+N +1
+E x2
+E -15
+N -1
+N -1
+S -5
+Nu +0
+T +10
+T -5
+Nu +0

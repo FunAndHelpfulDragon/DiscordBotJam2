@@ -39,8 +39,8 @@ class Running:
                 max += 1
                 if option[0] not in unique:
                     unique.append(option[0])
-                if len(unique) == 14:  # need to change value.
-                    return "Max"
+                if len(unique) >= 30:  # need to change value.
+                    return "Max", ""
             s = str(option[0])
             inv.append(s)
             if inv[0] == "":
@@ -66,9 +66,11 @@ class Running:
                 strinv = strinv.replace(" ", "")
                 Lo.Save(author.id, 'DNA', strinv, True)
             return "Loss", rrr
+        else:
+            return "None", ""
 
     def Sim(self, id, random=False):
-        # info = g.Inv(id, "DNA", True)
+        info = g.Inv(id, "DNA", True)
         # if random:
         #     strand = g.Random("", 1, False)
         #     # pdb.set_trace()
@@ -78,7 +80,8 @@ class Running:
         #     # s = str(strand[0])
         #     s = strand[0].replace(" ", "")
         #     info.append(s)
-        info = g.Random("", 10, False)
+        if random:
+            info = g.Random("", len(info), False)
         results = []
         results = self.Stats(info)
         Score = []

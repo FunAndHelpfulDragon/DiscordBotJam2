@@ -1,3 +1,4 @@
+import discord
 from discord.ext import commands
 
 ConsoleCheck = input("Check for console input? (y = yes, n = no):")
@@ -38,8 +39,6 @@ if ConsoleCheck.lower() == "y":
     @my_console.command()
     async def Notify(message):
         print("Sending message to discord")
-        print(os.walk("Files"))
-        print("2")
         for r, d, file in os.walk("Files/"):
             for file in file:
                 print(file)
@@ -54,6 +53,27 @@ if ConsoleCheck.lower() == "y":
 @client.event
 async def on_ready():
     print("Bot is ready")
+
+
+@client.event
+async def on_guild_join(guild):
+    for channel in guild.text_channels:
+        if channel.permissions_for(guild.me).send_messages:
+            embed = discord.Embed(
+                name="Welcome",
+                title="Welcome",
+                description="Thank you for inviting me, here is some information."  # noqa
+            )
+            embed.add_field(
+                name="Settings",
+                value="The prefix for this server is '!' by deafult, although can be changed."  # noqa
+            )
+            embed.add_field(
+                name="Commands",
+                value="All of my commands are in '!help'"
+            )
+            await channel.send(embed=embed)
+    await guild.me.edit(nick="Run bot Run (!)")
 
 
 def GetKey():

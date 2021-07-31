@@ -35,45 +35,10 @@ class DNA(commands.Cog):
             elif result.content.lower() == "no":
                 await ctx.send(f"Please use `{Lo.Info(ctx.guild.id, 'prefix')}inv`, `{Lo.Info(ctx.guild.id, 'prefix')}run` to play")  # noqa
         else:  # makes a new game (remove/change else?)
-            gen.Random(ctx.author, 7)
+            gen.Random(ctx.author, 7, True, True)
             await ctx.reply(embed=gen.LoadInv(ctx.author))
             await ctx.reply(embed=gen.LoadInv(ctx.author, 'DNA'))
-            embed = discord.Embed(
-                name="Welcome",
-                description="WELCOME!",
-                colour=discord.Colour.random()
-            )
-            embed.add_field(
-                name="Information",
-                value="Welcome!, if you have started a new save or not, this embed is meant to teach you the basics."  # noqa
-            )
-            embed.add_field(
-                name="Goal",
-                value="Your goal, is to edit your DNA structure and try to get the best combination of DNA that there is. Using all 15 variations of strands (more coming soon). This is a running based simulation where each strand does different things to your bot. Use `!help colour` to get a list of colours."  # noqa
-            )
-            embed.add_field(
-                name="Help",
-                value=f"use `{Lo.Info(ctx.guild.id, 'prefix')}help` to get information on commands."  # noqa
-            )
-            embed.add_field(
-                name="Other Notes",
-                value="- Your files save and load, so don't worry about losing data."  # noqa
-            )
-            embed.add_field(
-                name="Basics",
-                value=f"`{Lo.Info(ctx.guild.id, 'prefix')}inv` is your inventory where you have all your strands.\n" +  # noqa
-                f"To add strands to your DNA use `{Lo.Info(ctx.guild.id, 'prefix')}add` along with the colour of the strand and the position. Do note, that you can only put 1 strand in each position.\n" +  # noqa
-                f"To remove strands from your DNA use `{Lo.Info(ctx.guild.id, 'prefix')}remove` along with the place the strand is in the DNA.\n" +  # noqa
-                f"To test out your DNA against other bots (and possibly get more) use `{Lo.Info(ctx.guild.id, 'prefix')}run`.\n" +  # noqa
-                f" Your challenge is to get the highest score out of all the bots.\n" +  # noqa
-                f"New strands are Recieved from doing `{Lo.Info(ctx.guild.id, 'prefix')}run` But be carefuly as you can lose a strand.\n" +  # noqa
-                f"Each strand has different abilities, some are good and some are bad.",  # noqa
-                inline=False
-            )
-            embed.set_footer(
-                text=f"{ctx.author}'s game"
-            )
-            await ctx.send(embed=embed)
+            await self.Info(ctx)
 
     @commands.command(
         aliases=['Inv', 'inv', 'inventory'],
@@ -124,6 +89,17 @@ class DNA(commands.Cog):
             await ctx.reply(f"Use `{Lo.Info(ctx.guild.id, 'prefix')}run` to see your results from your new DNA layout!")  # noqa
 
     @commands.command(
+        aliases=['clear_inv', 'clearInv', 'clearinventory', 'Clearinventory', 'Iclear'],  # noqa
+        help="Empties your DNA into your inventory",  # noqa
+        description="None"
+    )
+    async def ClearInv(self, ctx):
+        gen = g.Generation(ctx.author)  # change location
+        for x in range(0, 10):
+            gen.RmInv(ctx.author, x)
+        await ctx.send("Finished emptying DNA")
+
+    @commands.command(
         aliases=['run'],
         help="Runs a simulation",
         description="None"
@@ -132,7 +108,8 @@ class DNA(commands.Cog):
         R = r.Running()
         embed = discord.Embed(
             name="Results",
-            description="Results of your recent simulation (rounded to 5 decimal places)",  # noqa
+            title="Results",
+            description="Results of your recent running simulation (rounded to 5 decimal places)",  # noqa
             colour=discord.Colour.random()
         )
         X = 0
@@ -152,7 +129,7 @@ class DNA(commands.Cog):
             if X == 1:
                 Extra = "(Yours)"
             embed.add_field(
-                name=f"Bot {X} {Extra}",
+                name=f"Runner {X} {Extra}",
                 value=Result
             )
         embed.set_footer(
@@ -161,14 +138,59 @@ class DNA(commands.Cog):
         msg = await ctx.send(embed=embed)
         Action, item = R.Info(ctx.author, Results)
         if Action == "New Item":
-            await msg.reply(f"You Recieved the '{item}'' strand!")
+            await msg.reply(f"You Recieved the '{item}' strand!")
         elif Action == "Loss":
             await msg.reply(f"You Lost the '{item}' strand :(")
+        elif Action == "None":
+            await msg.reply(f"You didn't come last, but you didn't come in the top half, so you got nothing :(")  # noqa
         elif Action == "Max":
             await msg.reply("You have gathered all the DNA alvalible. Well Done!")  # noqa
         else:
             await msg.reply("System broken, please contact an owner about this")  # noqa
         await ctx.reply(f"Use `{Lo.Info(ctx.guild.id, 'prefix')}inventory` to see your inventory!")  # noqa
+
+    @commands.command(
+        aliases=['info'],
+        help="Gives information about how to use the bot. PLEASE READ",
+        description="None"
+    )
+    async def Info(self, ctx):
+        embed = discord.Embed(
+            name="Welcome",
+            description="WELCOME!",
+            colour=discord.Colour.random()
+        )
+        embed.add_field(
+            name="Information",
+            value="Welcome!, if you have started a new save or not, this embed is meant to teach you the basics."  # noqa
+        )
+        embed.add_field(
+            name="Goal",
+            value="Your goal, is to edit your DNA structure and try to get the best combination of DNA that there is. Using all 30 variations of strands (more coming soon). This is a running based simulation where each strand does different things to your bot. Use `!help colour` to get a list of colours."  # noqa
+        )
+        embed.add_field(
+            name="Help",
+            value=f"use `{Lo.Info(ctx.guild.id, 'prefix')}help` to get information on commands."  # noqa
+        )
+        embed.add_field(
+            name="Other Notes",
+            value="- Your files save and load, so don't worry about losing data."  # noqa
+        )
+        embed.add_field(
+            name="Basics",
+            value=f"`{Lo.Info(ctx.guild.id, 'prefix')}inv` is your inventory where you have all your strands.\n" +  # noqa
+            f"To add strands to your DNA use `{Lo.Info(ctx.guild.id, 'prefix')}add` along with the colour of the strand and the position. Do note, that you can only put 1 strand in each position.\n" +  # noqa
+            f"To remove strands from your DNA use `{Lo.Info(ctx.guild.id, 'prefix')}remove` along with the place the strand is in the DNA.\n" +  # noqa
+            f"To test out your DNA against other bots (and possibly get more) use `{Lo.Info(ctx.guild.id, 'prefix')}run`.\n" +  # noqa
+            f" Your challenge is to get the highest score out of all the bots.\n" +  # noqa
+            f"New strands are Recieved from doing `{Lo.Info(ctx.guild.id, 'prefix')}run` But be carefuly as you can lose a strand.\n" +  # noqa
+            f"Each strand has different abilities, some are good and some are bad.",  # noqa
+            inline=False
+        )
+        embed.set_footer(
+            text=f"{ctx.author}'s game"
+        )
+        await ctx.send(embed=embed)
 
     @start.error
     async def start_fail_Error(self, ctx, error):
@@ -189,6 +211,16 @@ class DNA(commands.Cog):
     async def remove_fail_error(self, ctx, error):
         await ctx.send("There was an error whilst removing a strand from your DNA,  please try again\n If it happens again, please alert one of the owners")  # noqa
         print(f"{ctx.author}:remove->{error}")
+
+    @Run.error
+    async def run_fail_error(self, ctx, error):
+        await ctx.send("There was an error whilst your runners were trying to run, please try again.\nIf it happens again, please alert one of the owners")  # noqa
+        print(f"{ctx.author}:run->{error}")
+
+    @Info.error
+    async def info_fail_error(self, ctx, error):
+        await ctx.send("There was an error whilst trying to show you some information, please try again.\nIf it happens again, please alert one of the owners")  # noqa
+        print(f"{ctx.author}:Info->{error}")
 
 
 # setups the cog for use.

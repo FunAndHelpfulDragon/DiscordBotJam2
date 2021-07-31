@@ -21,11 +21,17 @@ class Generation:
         Lo.Del(author.id, True)
         return True
 
-    def Random(self, author, number, save=True):  # gives user number of strands (to start with)  # noqa
+    def Random(self, author, number, save=True, Start=False):  # gives user number of strands (to start with)  # noqa
         # loads Strands
         Temp = []
         with open("DNA/Colours", 'r') as Colours:
             file = Colours.readlines()
+            if Start:
+                Temp.append("red")
+                Temp.append("orange")
+                Temp.append("yellow")
+                Temp.append("white")
+                Temp.append("black")
             while len(Temp) < number: # makes sure they have atleast number strands to start with (change?)  # noqa
                 result = random.randint(0, len(file) - 1)
                 try:
@@ -80,7 +86,7 @@ class Generation:
         if Option == "Inventory":
             option = f"Inventory - {len(Temp)} Items"
         elif Option == "DNA":
-            option = f"{Option} \nYou have {len(Temp)}/{10} max available of {Option}"  # noqa
+            option = f"{Option} \nYou have {len(Temp)} strands out of {10}  {Option}"  # noqa
         print(option)
         # creates embed
         embed = discord.Embed(
@@ -105,7 +111,7 @@ class Generation:
                     # also, add to embed :)
                     embed.add_field(
                         name=f"{Strand} (Pos:{int(Temp2.index(Strand)) + 1})",
-                        value="Unknown",
+                        value="Unknown",  # didn't have time to do things on this.  # noqa
                         # inline=False
                     )
         # information
@@ -140,7 +146,7 @@ class Generation:
 
     def RmInv(self, author, Position):
         # takes a item from inputted position and puts it in user inventory
-        Position = int(Position)  # - 1
+        Position = int(Position) - 1
         S = self.Inv(author, 'DNA', True)
         Inv = self.Inv(author, 'Inventory', True)
         good = True

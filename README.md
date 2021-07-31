@@ -1,4 +1,4 @@
-#Run Bot Run
+# Run Bot Run
 
 Pre-Notes:
 -yes, this repo is called 'DiscordBotJam2', this is because it was made before the name of the bot was decided.
