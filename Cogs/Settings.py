@@ -36,7 +36,7 @@ class Settings(commands.Cog):
                     value=f"Prefix: {Lo.Info(ctx.guild.id, 'prefix')}\n" +
                           f"Notifications: {Lo.Info(ctx.guild.id, 'notifications')}\n"  # noq,  # better way than putting them all here?  # noqa
                     )
-            embed.set_footer(text=f"Tip: you can use `{Lo.Info(ctx.guild.id, 'prefix')}settings view` or `{Lo.Info(ctx.guild.id, 'prefix')}settings change` to view/change settings without having to say change/view after ``{Lo.Info(ctx.guild.id, 'prefix')}settings`\n"+  # noqa
+            embed.set_footer(text=f"Tip: you can use `{Lo.Info(ctx.guild.id, 'prefix')}settings view` or `{Lo.Info(ctx.guild.id, 'prefix')}settings change` to view/change settings without having to say change/view after `{Lo.Info(ctx.guild.id, 'prefix')}settings`\n"+  # noqa
                                   f"Confused on what a setting does? use `{Lo.Info(ctx.guild.id, 'prefix')}help settings` to view what each setting does.")  # noqa
             await ctx.send(embed=embed)
 
