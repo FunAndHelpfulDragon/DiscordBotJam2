@@ -48,6 +48,7 @@ if ConsoleCheck.lower() == "y":
                         Channel = int(Lo.Info(file[:-7], 'Notifications'))
                         channel = client.get_channel(Channel)
                         await channel.send(message)
+                        break
 
 
 @client.event
@@ -161,6 +162,7 @@ if __name__ == '__main__':
     for Cog in os.listdir("./Cogs"):
         if Cog != "__pycache__" and Cog != ".DS_Store":  # add no cogs here
             client.load_extension(f'Cogs.{Cog[:-3]}')  # removes ".py" extension + loads cog  # noqa
+    # client.load_extension('Cogs.PublishHelp')
 
     if ConsoleCheck.lower() == "y":
         my_console.start()
