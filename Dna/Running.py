@@ -2,6 +2,7 @@ import sys
 import os
 import generation as gen
 import random
+import aiofiles
 sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 import Load  # noqa E402
 Lo = Load.LoadFile()
@@ -157,12 +158,12 @@ class Running:
                 # return Result
             # simulation (math basically) starts here
 
-    def Stats(self, bot):
+    async def Stats(self, bot):
         StatTable = []
-        with open("./Dna/Stats", 'r') as s:
-            with open("./Dna/Colours", 'r') as c:
-                colours = c.readlines()
-                info = s.readlines()
+        async with aiofiles.open("./Dna/Stats", 'r') as s:
+            async with aiofiles.open("./Dna/Colours", 'r') as c:
+                colours = await c.readlines()
+                info = await s.readlines()
                 for strand in bot:
                     if strand.strip():  # checks if it is not equal to ''
                         lines = 0  # can this be better?

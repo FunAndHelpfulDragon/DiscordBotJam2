@@ -1,4 +1,5 @@
 import os
+import aiofiles
 from os import path
 
 
@@ -14,14 +15,14 @@ class LoadFile:
             file_name: str = f"Files/{Name}.server"
         if not path.exists(file_name):
             if not user:
-                with open(file_name, 'a') as file, open("Files/Settings", 'r') as normal:  # noqa
-                    file.write(normal.read())
+                async with aiofiles.open(file_name, 'a') as file, aiofiles.open("Files/Settings", 'r') as normal:  # noqa
+                    await file.write(await normal.read())
             else:
-                with open(file_name, 'a') as file, open("Files/Strands", 'r') as normal:  # noqa
-                    file.write(normal.read())
+                async with aiofiles.open(file_name, 'a') as file, aiofiles.open("Files/Strands", 'r') as normal:  # noqa
+                    await file.write(await normal.read())
 
-        with open(file_name, 'r') as file:
-            return file.readlines()
+        async with aiofiles.open(file_name, 'r') as file:
+            return await file.readlines()
 
     def Info(self, Name, Info, user=False):  # get info about setting
         file = self.Load(Name, user)
@@ -40,17 +41,17 @@ class LoadFile:
                 if line.split(" ")[0].lower() == Info.lower():  # if setting found  # noqa
                     line = f"{Info} {New}\n"  # replace setting with new settin
                 text += line
-            with open(f"Files/{Name}.server", 'w') as file:  # open and write
+            async with aiofiles.open(f"Files/{Name}.server", 'w') as file:
                 print(text)
-                file.write(text)
+                await file.write(text)
         else:  # dna saving, same thing different dir. Combine?
             text = ""
             for line in file:
                 if line.split(" ")[0].lower() == Info.lower():
                     line = f"{Info} {New}\n"
                 text += line
-            with open(F"Files/DNA/{Name}.user", 'w') as f:
-                f.write(text)
+            async with aiofiles.open(F"Files/DNA/{Name}.user", 'w') as f:
+                await f.write(text)
 
     def Del(self, Name, user=False):  # delete file
         if user:

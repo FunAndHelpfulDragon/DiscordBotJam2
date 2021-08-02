@@ -63,9 +63,10 @@ class DNA(commands.Cog):
     async def add(self, ctx, Colour=None, Place=None):
         # checks
         if Colour is None:
-            await ctx.reply("Please include a colour from your inventory")
-        if Place is None or int(Place) < 0:
-            await ctx.reply("Please include a positive interager of the space you want to put it in your DNA")  # noqa
+            await ctx.reply("Please include a colour (name) from your inventory")  # noqa
+        else:
+            if Place is None or int(Place) < 0:
+                await ctx.reply("Please include a positive interager of the space you want to put it in your DNA")  # noqa
         gen = g.Generation(ctx.author)  # change location
         # add
         if Colour.lower() in gen.Inv(ctx.author, 'Inventory'):

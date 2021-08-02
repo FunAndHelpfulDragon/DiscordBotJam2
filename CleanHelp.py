@@ -19,7 +19,7 @@ class CleanHelp:
         for cog in self.client.cogs:
             embed = discord.Embed(
                 title=f"{cog}",
-                description=f"Commands in {cog}",
+                # description=f"{cog.description}",
                 colour=self.colour
             )
             for command in self.client.get_cog(cog).get_commands():

@@ -4,7 +4,7 @@ import CleanHelp as Clean
 import asyncio
 
 
-class PublishHelp(commands.Cog):
+class PublishHelp(commands.Cog, description="Help about Help (also about and credit)"):  # noqa
     def __init__(self, client, pages, colour):
         print("Publish Help setup")
         self.client = client
@@ -60,6 +60,45 @@ class PublishHelp(commands.Cog):
             await msg.remove_reaction("⬅️", msg.author)
             await msg.remove_reaction("➡️", msg.author)
             await msg.remove_reaction("❌", msg.author)
+
+    @commands.command(
+        aliases=['ColorHelp', 'colourhelp', 'colorhelp', 'Ch', 'ch', 'CH'],
+        help="Shows colours, and what category they come in",
+        description="None",
+        usage="None"
+    )
+    async def ColourHelp(self, ctx):
+        embed = discord.Embed(
+            title="Colours",
+            description="A list of colours and what category they come under, for a good bot you need at least 1 strand (colour) in 'Speed', 'Energy', 'Nodes', 'Time'",  # noqa
+            colour=discord.Colour.random()
+        )
+        embed.add_field(
+            name="Speed",
+            value="red, light blue, dark green, amber, canary, gold",
+            inline=False
+        )
+        embed.add_field(
+            name="Energy",
+            value="orange, light green, green, blue, dark blue, bronze, coral, desert",  # noqa
+            inline=False
+        )
+        embed.add_field(
+            name="Nodes",
+            value="yellow, purple, pink, charcol, flame, frostbite",
+            inline=False
+        )
+        embed.add_field(
+            name="Time",
+            value="white, grey, cyan, carrot orange, lemon, jungle green",
+            inline=False
+        )
+        embed.add_field(
+            name="Nothing",
+            value="black, cadet, iceberg, mango",
+            inline=False
+        )
+        await ctx.send(embed)
 
     @commands.command(
         aliases=['About', 'ABOUT'],

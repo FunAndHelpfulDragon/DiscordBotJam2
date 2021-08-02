@@ -2,6 +2,7 @@ import discord
 import sys
 import os
 import random
+import aiofiles
 sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 import Load  # noqa E402
 Lo = Load.LoadFile()
@@ -21,11 +22,11 @@ class Generation:
         Lo.Del(author.id, True)
         return True
 
-    def Random(self, author, number, save=True, Start=False):  # gives user number of strands (to start with)  # noqa
+    async def Random(self, author, number, save=True, Start=False):  # gives user number of strands (to start with)  # noqa
         # loads Strands
         Temp = []
-        with open("Dna/Colours", 'r') as Colours:
-            file = Colours.readlines()
+        async with aiofiles.open("Dna/Colours", 'r') as Colours:
+            file = await Colours.readlines()
             if Start:
                 Temp.append("red")
                 Temp.append("orange")
