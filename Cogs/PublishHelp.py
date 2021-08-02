@@ -44,7 +44,16 @@ class PublishHelp(commands.Cog, description="Help about Help (also about and cre
                 reaction, user = await self.client.wait_for('reaction_add', timeout=600, check=check)  # 600 = 10mins # noqa
                 await msg.remove_reaction(reaction, user)
                 if self.Page != -1:
-                    await msg.edit(embed=self.pages[self.Page])  # edits with new  # noqa
+                    try:
+                        await msg.edit(embed=self.pages[self.Page])  # edits with new  # noqa
+                    except IndexError:
+                        if self.Page > 3:
+                            self.Page = 3
+                        elif self.Page < 0:
+                            self.Page = 0
+                        else:
+                            await ctx.send("how? how did you break this?")
+                        await msg.edit(embed=self.pages[self.Page])
                     if self.Page > 0:  # more reactions
                         await msg.add_reaction("⬅️")
                     else:
