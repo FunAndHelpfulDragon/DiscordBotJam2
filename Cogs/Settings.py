@@ -33,11 +33,11 @@ class Settings(commands.Cog):
                     colour=discord.Colour.red())  # setting to change?
             embed.add_field(  # automatic?
                     name="Settings",
-                    value=f"Prefix: {Lo.Info(ctx.guild.id, 'prefix')}\n" +
-                          f"Notifications: {Lo.Info(ctx.guild.id, 'notifications')}\n"  # noq,  # better way than putting them all here?  # noqa
+                    value=f"Prefix: {await Lo.Info(ctx.guild.id, 'prefix')}\n" +  # noqa
+                          f"Notifications: {await Lo.Info(ctx.guild.id, 'notifications')}\n"  # noq,  # better way than putting them all here?  # noqa
                     )
-            embed.set_footer(text=f"Tip: you can use `{Lo.Info(ctx.guild.id, 'prefix')}settings view` or `{Lo.Info(ctx.guild.id, 'prefix')}settings change` to view/change settings without having to say change/view after `{Lo.Info(ctx.guild.id, 'prefix')}settings`\n"+  # noqa
-                                  f"Confused on what a setting does? use `{Lo.Info(ctx.guild.id, 'prefix')}help settings` to view what each setting does.")  # noqa
+            embed.set_footer(text=f"Tip: you can use `{await Lo.Info(ctx.guild.id, 'prefix')}settings view` or `{await Lo.Info(ctx.guild.id, 'prefix')}settings change` to view/change settings without having to say change/view after `{await Lo.Info(ctx.guild.id, 'prefix')}settings`\n"+  # noqa
+                                  f"Confused on what a setting does? use `{await Lo.Info(ctx.guild.id, 'prefix')}help settings` to view what each setting does.")  # noqa
             await ctx.send(embed=embed)
 
         async def change():
@@ -49,7 +49,7 @@ class Settings(commands.Cog):
 
             msg = await self.client.wait_for('message', check=ccheck)  # gets option # noqa
             try:
-                result = Lo.Info(ctx.guild.id, msg.content.lower())
+                result = await Lo.Info(ctx.guild.id, msg.content.lower())
                 await ctx.send(f"Current {msg.content.lower()}: {result}")  # noqa says current
                 await ctx.send("What would you like to change it to? (cancel to not change): ")  # noqa asks for update
 
@@ -57,7 +57,7 @@ class Settings(commands.Cog):
                 if changesg.content == "cancel":
                     await ctx.send("Caneled!")
                 else:
-                    Lo.Save(ctx.guild.id, msg.content.lower(), changesg.content)  # updates  # noqa
+                    await Lo.Save(ctx.guild.id, msg.content.lower(), changesg.content)  # updates  # noqa
                     await ctx.send(f"{msg.content} has been changed to {changesg.content}")  # noqa
                     if msg.content.lower() == "prefix":
                         await ctx.guild.me.edit(nick=f"Run bot Run ({changesg.content})")  # noqa

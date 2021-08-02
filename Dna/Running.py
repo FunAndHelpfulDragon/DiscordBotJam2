@@ -19,12 +19,12 @@ class Running:
         # Punish/reward user.
         # Regenerate new ai with better dna.
 
-    def Info(self, author, score):
+    async def Info(self, author, score):
         Y = score[0]
         score.sort()
         if score.index(Y) > (len(score)/2):  # upper half
-            inv = g.Inv(author, "Inventory", True)
-            stra = g.Inv(author, 'DNA', True)
+            inv = await g.Inv(author, "Inventory", True)
+            stra = await g.Inv(author, 'DNA', True)
             option = g.Random("", 1, False)
             max = 1
             option[0] = option[0].replace(" ", "")
@@ -49,29 +49,29 @@ class Running:
                 for x in range(len(inv), 10):
                     inv.append('')
             ninv = str(inv).replace(" ", "")
-            Lo.Save(author.id, 'Inventory', ninv, True)
+            await Lo.Save(author.id, 'Inventory', ninv, True)
             return "New Item", s
         elif score.index(Y) == len(score):  # lower half
-            inv = g.Inv(author, "Inventory", True)
+            inv = await g.Inv(author, "Inventory", True)
             rr = random.randint(0, len(inv))
             rrr = inv[rr]
             if inv.count(inv[0]) == len(inv):
                 del inv[rr]
                 strinv = str(inv)
                 strinv = strinv.replace(" ", "")
-                Lo.Save(author.id, 'Inventory', strinv, True)
+                await Lo.Save(author.id, 'Inventory', strinv, True)
             else:
-                inv = g.Inv(author, "DNA", True)
+                inv = await g.Inv(author, "DNA", True)
                 del inv[rr]
                 strinv = str(inv)
                 strinv = strinv.replace(" ", "")
-                Lo.Save(author.id, 'DNA', strinv, True)
+                await Lo.Save(author.id, 'DNA', strinv, True)
             return "Loss", rrr
         else:
             return "None", ""
 
-    def Sim(self, id, random=False):
-        info = g.Inv(id, "DNA", True)
+    async def Sim(self, id, random=False):
+        info = await g.Inv(id, "DNA", True)
         # if random:
         #     strand = g.Random("", 1, False)
         #     # pdb.set_trace()
@@ -84,7 +84,7 @@ class Running:
         if random:
             info = g.Random("", len(info), False)
         results = []
-        results = self.Stats(info)
+        results = await self.Stats(info)
         Score = []
         re = self.Run(results)
         Score.append(re)
@@ -158,6 +158,7 @@ class Running:
                 # return Result
             # simulation (math basically) starts here
 
+    @staticmethod
     async def Stats(self, bot):
         StatTable = []
         async with aiofiles.open("./Dna/Stats", 'r') as s:

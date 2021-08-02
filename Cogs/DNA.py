@@ -34,7 +34,7 @@ class DNA(commands.Cog):
                 if gen.DelGame(ctx.author):
                     await result.reply("Your save has been reset, use `!start` to get a new save")  # noqa
             elif result.content.lower() == "no":
-                await ctx.send(f"Please use `{Lo.Info(ctx.guild.id, 'prefix')}inv`, `{Lo.Info(ctx.guild.id, 'prefix')}run` to play")  # noqa
+                await ctx.send(f"Please use `{await Lo.Info(ctx.guild.id, 'prefix')}inv`, `{await Lo.Info(ctx.guild.id, 'prefix')}run` to play")  # noqa
         else:  # makes a new game (remove/change else?)
             gen.Random(ctx.author, 7, True, True)
             await ctx.reply(embed=gen.LoadInv(ctx.author))
@@ -51,7 +51,7 @@ class DNA(commands.Cog):
         gen = g.Generation(ctx.author)  # change location
         await ctx.reply(embed=gen.LoadInv(ctx.author))
         await ctx.reply(embed=gen.LoadInv(ctx.author, 'DNA'))
-        await ctx.reply(f"use `{Lo.Info(ctx.guild.id, 'prefix')}add` to move an strand from your inventory to your DNA, And use `{Lo.Info(ctx.guild.id, 'prefix')}remove` to move a strand from your DNA to your inventory")  # noqa
+        await ctx.reply(f"use `{await Lo.Info(ctx.guild.id, 'prefix')}add` to move an strand from your inventory to your DNA, And use `{await Lo.Info(ctx.guild.id, 'prefix')}remove` to move a strand from your DNA to your inventory")  # noqa
 
     @commands.command(
         aliases=['Add'],
@@ -69,11 +69,12 @@ class DNA(commands.Cog):
                 await ctx.reply("Please include a positive interager of the space you want to put it in your DNA")  # noqa
         gen = g.Generation(ctx.author)  # change location
         # add
-        if Colour.lower() in gen.Inv(ctx.author, 'Inventory'):
+        result = await gen.Inv(ctx.author, 'Inventory')
+        if Colour.lower() in result:
             # await ctx.reply("You do have this colour in your inventory!", mention_author=False)  # noqa
             gen.addInv(ctx.author, Colour.lower(), Place)
             await ctx.reply(embed=gen.LoadInv(ctx.author, 'DNA'))
-            await ctx.reply(f"Use `{Lo.Info(ctx.guild.id, 'prefix')}run` to see your results from your new DNA layout!")  # noqa
+            await ctx.reply(f"Use `{await Lo.Info(ctx.guild.id, 'prefix')}run` to see your results from your new DNA layout!")  # noqa
         else:
             await ctx.reply("You do not have this colour in your inventory!")
 
@@ -91,7 +92,7 @@ class DNA(commands.Cog):
         else:
             gen.RmInv(ctx.author, Position)
             await ctx.reply(embed=gen.LoadInv(ctx.author, 'DNA'))
-            await ctx.reply(f"Use `{Lo.Info(ctx.guild.id, 'prefix')}run` to see your results from your new DNA layout!")  # noqa
+            await ctx.reply(f"Use `{await Lo.Info(ctx.guild.id, 'prefix')}run` to see your results from your new DNA layout!")  # noqa
 
     @commands.command(
         aliases=['clear_inv', 'clearInv', 'clearinventory', 'Clearinventory', 'Iclear'],  # noqa
@@ -125,7 +126,7 @@ class DNA(commands.Cog):
         for rr in range(0, 10):
             if rr > 0:
                 random = True
-            Results.append(R.Sim(ctx.author.id, random))
+            Results.append(await R.Sim(ctx.author.id, random))
 
         for Result in Results:
             Result = str(Result)
@@ -154,7 +155,7 @@ class DNA(commands.Cog):
             await msg.reply("You have gathered all the DNA alvalible. Well Done!")  # noqa
         else:
             await msg.reply("System broken, please contact an owner about this")  # noqa
-        await ctx.reply(f"Use `{Lo.Info(ctx.guild.id, 'prefix')}inventory` to see your inventory!")  # noqa
+        await ctx.reply(f"Use `{await Lo.Info(ctx.guild.id, 'prefix')}inventory` to see your inventory!")  # noqa
 
     @commands.command(
         aliases=['info'],
@@ -178,7 +179,7 @@ class DNA(commands.Cog):
         )
         embed.add_field(
             name="Help",
-            value=f"use `{Lo.Info(ctx.guild.id, 'prefix')}help` to get information on commands."  # noqa
+            value=f"use `{await Lo.Info(ctx.guild.id, 'prefix')}help` to get information on commands."  # noqa
         )
         embed.add_field(
             name="Other Notes",
@@ -186,12 +187,12 @@ class DNA(commands.Cog):
         )
         embed.add_field(
             name="Basics",
-            value=f"`{Lo.Info(ctx.guild.id, 'prefix')}inv` is your inventory where you have all your strands.\n" +  # noqa
-            f"To add strands to your DNA use `{Lo.Info(ctx.guild.id, 'prefix')}add` along with the colour of the strand and the position. Do note, that you can only put 1 strand in each position.\n" +  # noqa
-            f"To remove strands from your DNA use `{Lo.Info(ctx.guild.id, 'prefix')}remove` along with the place the strand is in the DNA.\n" +  # noqa
-            f"To test out your DNA against other bots (and possibly get more) use `{Lo.Info(ctx.guild.id, 'prefix')}run`.\n" +  # noqa
+            value=f"`{await Lo.Info(ctx.guild.id, 'prefix')}inv` is your inventory where you have all your strands.\n" +  # noqa
+            f"To add strands to your DNA use `{await Lo.Info(ctx.guild.id, 'prefix')}add` along with the colour of the strand and the position. Do note, that you can only put 1 strand in each position.\n" +  # noqa
+            f"To remove strands from your DNA use `{await Lo.Info(ctx.guild.id, 'prefix')}remove` along with the place the strand is in the DNA.\n" +  # noqa
+            f"To test out your DNA against other bots (and possibly get more) use `{await Lo.Info(ctx.guild.id, 'prefix')}run`.\n" +  # noqa
             f" Your challenge is to get the highest score out of all the bots.\n" +  # noqa
-            f"New strands are Recieved from doing `{Lo.Info(ctx.guild.id, 'prefix')}run` But be carefuly as you can lose a strand.\n" +  # noqa
+            f"New strands are Recieved from doing `{await Lo.Info(ctx.guild.id, 'prefix')}run` But be carefuly as you can lose a strand.\n" +  # noqa
             f"Each strand has different abilities, some are good and some are bad.",  # noqa
             inline=False
         )

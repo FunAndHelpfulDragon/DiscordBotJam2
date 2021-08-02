@@ -12,7 +12,7 @@ Lo = L.LoadFile()
 
 async def get_prefix(client, message):
     try:  # try except makes it work in dm's
-        result = Lo.Info(message.guild.id, "prefix")
+        result = await Lo.Info(message.guild.id, "prefix")
         print(result)
         return result
     except Exception:  # change exception?
@@ -44,8 +44,8 @@ if ConsoleCheck.lower() == "y":
                 print(file)
                 if file.endswith(".server"):
                     print(f"{file} ends with '.server'")
-                    if Lo.Info(file[:-7], 'Notifications').lower() != "off":
-                        Channel = int(Lo.Info(file[:-7], 'Notifications'))
+                    if await Lo.Info(file[:-7], 'Notifications').lower() != "off":  # noqa
+                        Channel = int(await Lo.Info(file[:-7], 'Notifications'))  # noqa
                         channel = client.get_channel(Channel)
                         await channel.send(message)
                         break

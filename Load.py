@@ -8,7 +8,7 @@ class LoadFile:
         print("Loading file")
 
     @staticmethod
-    def Load(Name, user):  # loads file
+    async def Load(Name, user):  # loads file
         if user:
             file_name: str = f"Files/DNA/{Name}.user"  # dna
         else:
@@ -24,16 +24,16 @@ class LoadFile:
         async with aiofiles.open(file_name, 'r') as file:
             return await file.readlines()
 
-    def Info(self, Name, Info, user=False):  # get info about setting
-        file = self.Load(Name, user)
+    async def Info(self, Name, Info, user=False):  # get info about setting
+        file = await self.Load(Name, user)
         for line in file:
             if line.split(" ")[0].lower() == Info.lower():
                 result = line.split(" ")[1]  # check Files/Settings
                 return result.rstrip('\n')  # return info
 
-    def Save(self, Name, Info, New, user=False):  # save new settings
+    async def Save(self, Name, Info, New, user=False):  # save new settings
         print(Name, Info, New, user)
-        file = self.Load(Name, user)
+        file = await self.Load(Name, user)
         if not user:
             text = ""
             print(file)

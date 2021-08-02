@@ -41,16 +41,16 @@ class Generation:
                     Temp.append(file[result].rstrip('\n'))
 
         if save:
-            Lo.Save(author.id, 'Inventory', str(Temp).replace(" ", ""), True)
+            await Lo.Save(author.id, 'Inventory', str(Temp).replace(" ", ""), True)  # noqa
         else:
             return Temp
 
-    def Inv(self, author, Option, sss=False):  # makes a table of their inventory  # noqa
+    async def Inv(self, author, Option, sss=False):  # makes a table of their inventory  # noqa
         if Option is None:  # inventory or strands
             Option = "Inventory"
         if type(author) != int:
             author = author.id
-        Inv = Lo.Info(author, Option, True)  # gets
+        Inv = await Lo.Info(author, Option, True)  # gets
         Lnv = Inv.split(",")
         Temp = []
         for s in Lnv:  # for Item
@@ -72,10 +72,10 @@ class Generation:
 
         return Temp
 
-    def LoadInv(self, author, Option=None):
+    async def LoadInv(self, author, Option=None):
         # loads inventory (twice)
-        Temp = self.Inv(author, Option)
-        Temp2 = self.Inv(author, Option, True)
+        Temp = await self.Inv(author, Option)
+        Temp2 = await self.Inv(author, Option, True)
         # sets the "Option" and "option"
         # Difference:
         # you see 'option' (and 'Option' sometimes),
@@ -121,23 +121,23 @@ class Generation:
         )
         return embed
 
-    def addInv(self, author, Colour, Position):
+    async def addInv(self, author, Colour, Position):
         # takes a colour and position
         # and moves that colour from inventory
         # to position in dna
         Position = int(Position) - 1  # lists start at 1 for the user
         # load invs
-        S = self.Inv(author, 'DNA', True)
-        Inv = self.Inv(author, 'Inventory', True)
+        S = await self.Inv(author, 'DNA', True)
+        Inv = await self.Inv(author, 'Inventory', True)
         # check if the position is empty
         if S[Position] == "":
             S[Position] = Colour  # add colour
             S = str(S).replace(" ", "")  # CONVERTS INTO SAVEABLE FORMAT (spaces make it break)  # noqa
-            Lo.Save(author.id, 'DNA', S, True)
+            await Lo.Save(author.id, 'DNA', S, True)
             Pos = Inv.index(Colour)
             Inv[Pos] = ""
             Inv = str(Inv).replace(" ", "")
-            Lo.Save(author.id, 'Inventory', Inv, True)
+            await Lo.Save(author.id, 'Inventory', Inv, True)
         else:
             # if, there is an item there already. THe user will be required to
             # remove the item before adding another item.
@@ -145,11 +145,11 @@ class Generation:
             # Make this automatic?
             return
 
-    def RmInv(self, author, Position):
+    async def RmInv(self, author, Position):
         # takes a item from inputted position and puts it in user inventory
         Position = int(Position) - 1
-        S = self.Inv(author, 'DNA', True)
-        Inv = self.Inv(author, 'Inventory', True)
+        S = await self.Inv(author, 'DNA', True)
+        Inv = await self.Inv(author, 'Inventory', True)
         good = True
         # attempts to find empty spot
         for X in range(0, len(Inv)):
@@ -163,9 +163,9 @@ class Generation:
             S[Position] = ""
 
         S = str(S).replace(" ", "")
-        Lo.Save(author.id, 'DNA', S, True)
+        await Lo.Save(author.id, 'DNA', S, True)
         Inv = str(Inv).replace(" ", "")
-        Lo.Save(author.id, 'Inventory', Inv, True)
+        await Lo.Save(author.id, 'Inventory', Inv, True)
 
     def Bot(self, number, Dna):
         # strands = order of strand(S) in dna
