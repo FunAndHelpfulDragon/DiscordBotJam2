@@ -12,7 +12,12 @@ class PublishHelp(commands.Cog):
         self.pages = pages
         self.page = 0
 
-    @commands.command()
+    @commands.command(
+        aliases=['Help', 'HELP'],
+        help="Help? Come need help?",
+        description="None",
+        usage="None"
+    )
     async def help(self, ctx, Page=0):
         self.Page = Page
         self.pages = self.CH.makePages([])
@@ -21,17 +26,18 @@ class PublishHelp(commands.Cog):
             await msg.add_reaction("⬅️")
         if self.Page < 3:
             await msg.add_reaction("➡️")
+
         await msg.add_reaction("❌")
 
         def check(reaction, user):
-            if user == ctx.author and reaction.message == msg:
+            if not user.bot and reaction.message == msg:
                 if str(reaction.emoji) == "⬅️":
                     self.Page -= 1
                 elif str(reaction.emoji) == "➡️":
                     self.Page += 1
                 elif str(reaction.emoji) == "❌":
                     self.Page = -1
-            return True
+                return True
 
         while self.Page != -1:
             try:
@@ -47,6 +53,7 @@ class PublishHelp(commands.Cog):
                         await msg.add_reaction("➡️")
                     else:
                         await msg.clear_reaction("➡️")
+                    await msg.add_reaction("❌")
             except asyncio.TimeoutError:
                 await msg.delete()
         else:
@@ -54,7 +61,12 @@ class PublishHelp(commands.Cog):
             await msg.remove_reaction("➡️", msg.author)
             await msg.remove_reaction("❌", msg.author)
 
-    @commands.command()
+    @commands.command(
+        aliases=['About', 'ABOUT'],
+        help="Information about the bot",
+        description="None",
+        usage="None"
+    )
     async def about(self, ctx):
         embed = discord.Embed(
             colour=discord.Colour.random(),
@@ -76,7 +88,8 @@ class PublishHelp(commands.Cog):
     @commands.command(
         aliases=['credit', 'credits'],
         help="Shows who has helped on the bot",
-        description="None"
+        description="None",
+        usage="None"
     )
     async def Credit(self, ctx):
         embed = discord.Embed(

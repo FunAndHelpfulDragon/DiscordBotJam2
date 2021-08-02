@@ -26,7 +26,8 @@ class CleanHelp:
                 if command.enabled and not command.hidden:
                     embed.add_field(
                         name=f"{command.name} {command.aliases} ({command.description})",  # noqa
-                        value=f"Help: {command.help}"
+                        value=f"Help: {command.help},\n" +
+                              f"Usage: {command.usage}"
                     )
             embed.set_footer(
                 text="[] = aliases,\n" +
