@@ -24,7 +24,7 @@ class PublishHelp(commands.Cog):
         await msg.add_reaction("❌")
 
         def check(reaction, user):
-            if user == ctx.author:
+            if user == ctx.author and reaction.message == msg:
                 if str(reaction.emoji) == "⬅️":
                     self.Page -= 1
                 elif str(reaction.emoji) == "➡️":
