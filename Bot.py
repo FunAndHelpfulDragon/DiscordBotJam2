@@ -1,9 +1,14 @@
 import discord
 from discord.ext import commands
 
-ConsoleCheck = input("Check for console input? (y = yes, n = no):")
-if ConsoleCheck.lower() == "y":
-    from dpyConsole import Console
+with open("Test.txt", 'r') as Test:
+    result = int(Test.read())
+    if result == 0:
+        ConsoleCheck = input("Check for console input? (y = yes, n = no):")
+        if ConsoleCheck.lower() == "y":
+            from dpyConsole import Console
+    else:
+        ConsoleCheck = "n"
 
 import os  # noqa
 import Load as L  # noqa
