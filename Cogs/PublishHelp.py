@@ -19,17 +19,17 @@ class PublishHelp(commands.Cog, description="Help about Help (also about and cre
         usage="None"
     )
     async def help(self, ctx, Page=0):
-        self.Page = Page
-        self.pages = self.CH.makePages([])
-        msg = await ctx.send(embed=self.pages[self.Page])
+        self.Page = Page  # get page
+        self.pages = self.CH.makePages([])  # get pages
+        msg = await ctx.send(embed=self.pages[self.Page])  # send page of pages
         if self.Page > 0:
-            await msg.add_reaction("⬅️")
+            await msg.add_reaction("⬅️")  # add reactions (if conditions meet)
         if self.Page < 3:
             await msg.add_reaction("➡️")
 
         await msg.add_reaction("❌")
 
-        def check(reaction, user):
+        def check(reaction, user):  # check for reactions
             if not user.bot and reaction.message == msg:
                 if str(reaction.emoji) == "⬅️":
                     self.Page -= 1
@@ -39,13 +39,13 @@ class PublishHelp(commands.Cog, description="Help about Help (also about and cre
                     self.Page = -1
                 return True
 
-        while self.Page != -1:
+        while self.Page != -1:  # while not close
             try:
-                reaction, user = await self.client.wait_for('reaction_add', timeout=10000000000000000, check=check)  # noqa
+                reaction, user = await self.client.wait_for('reaction_add', timeout=600, check=check)  # 600 = 10mins # noqa
                 await msg.remove_reaction(reaction, user)
                 if self.Page != -1:
-                    await msg.edit(embed=self.pages[self.Page])
-                    if self.Page > 0:
+                    await msg.edit(embed=self.pages[self.Page])  # edits with new  # noqa
+                    if self.Page > 0:  # more reactions
                         await msg.add_reaction("⬅️")
                     else:
                         await msg.clear_reaction("⬅️")
@@ -54,9 +54,9 @@ class PublishHelp(commands.Cog, description="Help about Help (also about and cre
                     else:
                         await msg.clear_reaction("➡️")
                     await msg.add_reaction("❌")
-            except asyncio.TimeoutError:
+            except asyncio.TimeoutError:  # timeout
                 await msg.delete()
-        else:
+        else:  # delete but keep
             await msg.remove_reaction("⬅️", msg.author)
             await msg.remove_reaction("➡️", msg.author)
             await msg.remove_reaction("❌", msg.author)
