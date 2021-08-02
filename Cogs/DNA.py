@@ -17,7 +17,8 @@ class DNA(commands.Cog):
     @commands.command(
         aliases=['Start'],
         help="Starts a game, Only 1 save file per user.",
-        description="None"
+        description="None",
+        usage="None",
     )
     async def start(self, ctx):
         gen = g.Generation(ctx.author)  # change location
@@ -43,7 +44,8 @@ class DNA(commands.Cog):
     @commands.command(
         aliases=['Inv', 'inv', 'inventory'],
         help="Displays your inventory",
-        description="None"
+        description="None",
+        usage="None",
     )
     async def Inventory(self, ctx):  # views their inventory
         gen = g.Generation(ctx.author)  # change location
@@ -54,7 +56,8 @@ class DNA(commands.Cog):
     @commands.command(
         aliases=['Add'],
         help="Add a strand from your inventory to your DNA",
-        description="`Colour`: option from your inventory, `Place`: Positive value"  # noqa
+        description="`Colour`: option from your inventory, `Place`: Positive value",  # noqa
+        usage="Colour (string), Place (int)"
         )
     # adds a strand to their dna
     async def add(self, ctx, Colour=None, Place=None):
@@ -76,7 +79,8 @@ class DNA(commands.Cog):
     @commands.command(
         aliases=['Remove', 'rm'],
         help="Removes a strand from your DNA and puts it in your inventory",
-        description="`Position`: Value of position that strand is in"
+        description="`Position`: Value of position that strand is in",
+        usage="Position (int)"
         )
     # removes strand from dna
     async def remove(self, ctx, Position=None):
@@ -91,7 +95,8 @@ class DNA(commands.Cog):
     @commands.command(
         aliases=['clear_inv', 'clearInv', 'clearinventory', 'Clearinventory', 'Iclear'],  # noqa
         help="Empties your DNA into your inventory",  # noqa
-        description="None"
+        description="None",
+        usage="None"
     )
     async def ClearInv(self, ctx):
         gen = g.Generation(ctx.author)  # change location
@@ -102,7 +107,8 @@ class DNA(commands.Cog):
     @commands.command(
         aliases=['run'],
         help="Runs a simulation",
-        description="None"
+        description="None",
+        usage="None"
     )
     async def Run(self, ctx):
         R = r.Running()
@@ -152,7 +158,8 @@ class DNA(commands.Cog):
     @commands.command(
         aliases=['info'],
         help="Gives information about how to use the bot. PLEASE READ",
-        description="None"
+        description="None",
+        usage="None",
     )
     async def Info(self, ctx):
         embed = discord.Embed(
