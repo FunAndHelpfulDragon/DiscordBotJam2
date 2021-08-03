@@ -36,7 +36,7 @@ class DNA(commands.Cog):
             elif result.content.lower() == "no":
                 await ctx.send(f"Please use `{await Lo.Info(ctx.guild.id, 'prefix')}inv`, `{await Lo.Info(ctx.guild.id, 'prefix')}run` to play")  # noqa
         else:  # makes a new game (remove/change else?)
-            gen.Random(ctx.author, 7, True, True)
+            await gen.Random(ctx.author, 7, True, True)
             await ctx.reply(embed=await gen.LoadInv(ctx.author))
             await ctx.reply(embed=await gen.LoadInv(ctx.author, 'DNA'))
             await self.Info(ctx)
