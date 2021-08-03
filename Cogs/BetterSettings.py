@@ -23,8 +23,8 @@ class Settings(commands.Cog):
             value=f"Prefix: {await Lo.Info(ctx.guild.id, 'prefix')}\n" +  # noqa
                   f"Notifications: {await Lo.Info(ctx.guild.id, 'notifications')}\n"  # noq,  # better way than putting them all here?  # noqa
             )
-        embed.set_footer(text=f"Tip: you can use `{await Lo.Info(ctx.guild.id, 'prefix')}settings view` or `{await Lo.Info(ctx.guild.id, 'prefix')}settings change` to view/change settings without having to say change/view after `{await Lo.Info(ctx.guild.id, 'prefix')}settings`\n"+  # noqa
-                              f"Confused on what a setting does? use `{await Lo.Info(ctx.guild.id, 'prefix')}help settings` to view what each setting does.")  # noqa
+        embed.set_footer(text=f"Tip: you can use {await Lo.Info(ctx.guild.id, 'prefix')}settings view or {await Lo.Info(ctx.guild.id, 'prefix')}settings change to view/change settings without having to say change/view after {await Lo.Info(ctx.guild.id, 'prefix')}settings\n")  # noqa
+                              # f"Confused on what a setting does? use {await Lo.Info(ctx.guild.id, 'prefix')}help settings to view what each setting does.")  # noqa
 
         if edit:
             await ctx.edit(content="", embed=embed)
@@ -68,7 +68,7 @@ class Settings(commands.Cog):
                     await changesg.delete()
                     await m2.delete()
                     await ctx.send(f"{msg.content} has been changed to {changesg.content}")  # noqa
-                    if changesg.content.lower() == "prefix":
+                    if msg.content.lower() == "prefix":
                         await ctx.guild.me.edit(nick=f"Run bot Run ({changesg.content})")  # noqa
             except Exception as e:  # change to something else
                 await ctx.send(f"Recieved {e} whilst attempting to change setting")  # warning,  # noqa
