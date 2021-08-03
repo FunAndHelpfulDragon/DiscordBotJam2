@@ -95,7 +95,7 @@ class DNA(commands.Cog):
             await ctx.reply(f"Use `{await Lo.Info(ctx.guild.id, 'prefix')}run` to see your results from your new DNA layout!")  # noqa
 
     @commands.command(
-        aliases=['clear_inv', 'clearInv', 'clearinventory', 'Clearinventory', 'Iclear'],  # noqa
+        aliases=['clear_inv', 'clearInv', 'clearinventory', 'Clearinventory', 'Iclear', 'clearinv'],  # noqa
         help="Empties your DNA into your inventory",  # noqa
         description="None",
         usage="None"
