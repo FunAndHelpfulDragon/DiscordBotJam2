@@ -35,7 +35,7 @@ class Running:
                 unique.append(i)
             unique = list(filter(None, unique))
             while option[0] in inv or option[0] in stra:
-                option = g.Random("", 1, False)
+                option = await g.Random("", 1, False)
                 option[0] = option[0].replace(" ", "")
                 max += 1
                 if option[0] not in unique:
