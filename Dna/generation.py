@@ -175,15 +175,18 @@ class Generation:
         return dna
 
     async def GetStrandInfo(self, id, Colour):
-        inv = await self.Inv(id, "unlocked", True)
-        async with aiofiles.open("Dna/Stats", 'r') as Stats:
-            async with aiofiles.open("Dna/Colours", 'r') as Colours:
-                Color = await Colours.readlines()
-                info = await Stats.readlines()
-                for unlock in inv:
-                    unlock = int(unlock)
-                    C = Color[unlock].replace(" ", "").rstrip("\n")
-                    Colour = Colour.rstrip("\n")
-                    if C == Colour:
-                        return info[unlock]
-        return "Unknown"
+        try:
+            inv = await self.Inv(id, "unlocked", True)
+            async with aiofiles.open("Dna/Stats", 'r') as Stats:
+                async with aiofiles.open("Dna/Colours", 'r') as Colours:
+                    Color = await Colours.readlines()
+                    info = await Stats.readlines()
+                    for unlock in inv:
+                        unlock = int(unlock)
+                        C = Color[unlock].replace(" ", "").rstrip("\n")
+                        Colour = Colour.rstrip("\n")
+                        if C == Colour:
+                            return info[unlock]
+        except Exception:
+            # print(e)
+            return "Unknown"
