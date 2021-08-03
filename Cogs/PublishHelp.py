@@ -107,7 +107,7 @@ class PublishHelp(commands.Cog, description="Help about Help (also about and cre
             value="black, cadet, iceberg, mango",
             inline=False
         )
-        await ctx.send(embed)
+        await ctx.send(embed=embed)
 
     @commands.command(
         aliases=['About', 'ABOUT'],
