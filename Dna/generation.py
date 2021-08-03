@@ -30,7 +30,7 @@ class Generation:
             if Start:
                 Temp.append("red")
                 Temp.append("orange")
-                Temp.append("yellow")
+                Temp.append("purple")
                 Temp.append("white")
                 Temp.append("black")
             while len(Temp) < number: # makes sure they have atleast number strands to start with (change?)  # noqa
