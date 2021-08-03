@@ -107,6 +107,23 @@ class DNA(commands.Cog):
         await ctx.send("Finished emptying DNA")
 
     @commands.command(
+        aliases=['fillinv', 'Fillinv', 'FI', 'fi', 'Fi'],
+        help="Fills enpty gaps in your DNA with strands from your inventory",
+        description="None",
+        usage="None",
+    )
+    async def FillInv(self, ctx):
+        gen = g.Generation(ctx.author)
+        Inv = await gen.Inv(ctx.author, "Inventory", True)
+        DNA = await gen.Inv(ctx.author, "DNA", True)
+        for x in range(0, len(Inv)):
+            if Inv[x] != "":
+                for xx in range(0, len(DNA)):
+                    if xx == "":
+                        await gen.addInv(ctx.author, Inv[x], )
+        await ctx.send("Finished filling inventory")
+
+    @commands.command(
         aliases=['run'],
         help="Runs a simulation",
         description="None",
