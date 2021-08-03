@@ -37,8 +37,8 @@ class DNA(commands.Cog):
                 await ctx.send(f"Please use `{await Lo.Info(ctx.guild.id, 'prefix')}inv`, `{await Lo.Info(ctx.guild.id, 'prefix')}run` to play")  # noqa
         else:  # makes a new game (remove/change else?)
             gen.Random(ctx.author, 7, True, True)
-            await ctx.reply(embed=gen.LoadInv(ctx.author))
-            await ctx.reply(embed=gen.LoadInv(ctx.author, 'DNA'))
+            await ctx.reply(embed=await gen.LoadInv(ctx.author))
+            await ctx.reply(embed=await gen.LoadInv(ctx.author, 'DNA'))
             await self.Info(ctx)
 
     @commands.command(
@@ -49,8 +49,8 @@ class DNA(commands.Cog):
     )
     async def Inventory(self, ctx):  # views their inventory
         gen = g.Generation(ctx.author)  # change location
-        await ctx.reply(embed=gen.LoadInv(ctx.author))
-        await ctx.reply(embed=gen.LoadInv(ctx.author, 'DNA'))
+        await ctx.reply(embed=await gen.LoadInv(ctx.author))
+        await ctx.reply(embed=await gen.LoadInv(ctx.author, 'DNA'))
         await ctx.reply(f"use `{await Lo.Info(ctx.guild.id, 'prefix')}add` to move an strand from your inventory to your DNA, And use `{await Lo.Info(ctx.guild.id, 'prefix')}remove` to move a strand from your DNA to your inventory")  # noqa
 
     @commands.command(
@@ -72,8 +72,8 @@ class DNA(commands.Cog):
         result = await gen.Inv(ctx.author, 'Inventory')
         if Colour.lower() in result:
             # await ctx.reply("You do have this colour in your inventory!", mention_author=False)  # noqa
-            gen.addInv(ctx.author, Colour.lower(), Place)
-            await ctx.reply(embed=gen.LoadInv(ctx.author, 'DNA'))
+            await gen.addInv(ctx.author, Colour.lower(), Place)
+            await ctx.reply(embed=await gen.LoadInv(ctx.author, 'DNA'))
             await ctx.reply(f"Use `{await Lo.Info(ctx.guild.id, 'prefix')}run` to see your results from your new DNA layout!")  # noqa
         else:
             await ctx.reply("You do not have this colour in your inventory!")
@@ -90,8 +90,8 @@ class DNA(commands.Cog):
         if Position is None:
             await ctx.reply("Please enter a positive interager for the strand you want to take out")  # noqa
         else:
-            gen.RmInv(ctx.author, Position)
-            await ctx.reply(embed=gen.LoadInv(ctx.author, 'DNA'))
+            await gen.RmInv(ctx.author, Position)
+            await ctx.reply(embed=await gen.LoadInv(ctx.author, 'DNA'))
             await ctx.reply(f"Use `{await Lo.Info(ctx.guild.id, 'prefix')}run` to see your results from your new DNA layout!")  # noqa
 
     @commands.command(
@@ -103,7 +103,7 @@ class DNA(commands.Cog):
     async def ClearInv(self, ctx):
         gen = g.Generation(ctx.author)  # change location
         for x in range(0, 10):
-            gen.RmInv(ctx.author, x)
+            await gen.RmInv(ctx.author, x)
         await ctx.send("Finished emptying DNA")
 
     @commands.command(
@@ -128,6 +128,7 @@ class DNA(commands.Cog):
                 random = True
             Results.append(await R.Sim(ctx.author.id, random))
 
+        await R.unlocked(ctx.author.id)
         for Result in Results:
             Result = str(Result)
             Result = Result.replace("[", "")
@@ -144,7 +145,7 @@ class DNA(commands.Cog):
             text=f"{ctx.author}'s results"
         )
         msg = await ctx.send(embed=embed)
-        Action, item = R.Info(ctx.author, Results)
+        Action, item = await R.Info(ctx.author, Results)
         if Action == "New Item":
             await msg.reply(f"You Recieved the '{item}' strand!")
         elif Action == "Loss":

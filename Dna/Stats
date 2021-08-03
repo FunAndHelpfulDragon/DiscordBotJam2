@@ -1,6 +1,6 @@
-S +10    # Speed
-E +5     # Energy
-N -2     # Nodes
+S +10
+E +5
+N -2
 E +10
 E -4
 S -4
@@ -9,8 +9,8 @@ E +16
 E -16
 N +1
 N +2
-T +1    # Time
-Nu +0    # Nothing
+T +1
+Nu +0
 T x2
 E +10
 T +3

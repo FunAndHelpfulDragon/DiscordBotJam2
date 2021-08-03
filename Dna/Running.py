@@ -82,9 +82,9 @@ class Running:
         #     s = strand[0].replace(" ", "")
         #     info.append(s)
         if random:
-            info = g.Random("", len(info), False)
+            info = await g.Random("", len(info), False)
         results = []
-        results = await self.Stats(info)
+        results = await self.Stats(self, info)
         Score = []
         re = self.Run(results)
         Score.append(re)
@@ -180,3 +180,24 @@ class Running:
                                     break
                             lines += 1
         return StatTable
+
+    async def unlocked(self, id):
+        info = await g.Inv(id, "DNA", True)
+        unlocked = await g.Inv(id, "unlocked", True)
+        CTable = []
+        async with aiofiles.open("Dna/Colours", 'r') as Colours:
+            lines = await Colours.readlines()
+            for line in lines:
+                if line.strip():
+                    line = line.replace(" ", "")
+                    CTable.append(line.rstrip("\n"))
+        for item in info:
+            if item.strip():
+                pos = CTable.index(item)
+                if str(pos) not in unlocked:  # and str(pos).strip():
+                    unlocked.append(str(pos))
+        # del unlocked[0]
+        # del unlocked[0]
+        unlockedtxt = str(unlocked)
+        unlockedtxt = unlockedtxt.replace(" ", "")
+        await Lo.Save(id, "unlocked", unlockedtxt, True)

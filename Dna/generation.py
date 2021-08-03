@@ -112,7 +112,7 @@ class Generation:
                     # also, add to embed :)
                     embed.add_field(
                         name=f"{Strand} (Pos:{int(Temp2.index(Strand)) + 1})",
-                        value="Unknown",  # didn't have time to do things on this.  # noqa
+                        value=await self.GetStrandInfo(author.id, Strand),  # didn't have time to do things on this.  # noqa
                         # inline=False
                     )
         # information
@@ -173,3 +173,17 @@ class Generation:
         for x in range(0, Dna):  # generates X bots
             dna.append(self.Random("", number, False))  # with random dna
         return dna
+
+    async def GetStrandInfo(self, id, Colour):
+        inv = await self.Inv(id, "unlocked", True)
+        async with aiofiles.open("Dna/Stats", 'r') as Stats:
+            async with aiofiles.open("Dna/Colours", 'r') as Colours:
+                Color = await Colours.readlines()
+                info = await Stats.readlines()
+                for unlock in inv:
+                    unlock = int(unlock)
+                    C = Color[unlock].replace(" ", "").rstrip("\n")
+                    Colour = Colour.rstrip("\n")
+                    if C == Colour:
+                        return info[unlock]
+        return "Unknown"
