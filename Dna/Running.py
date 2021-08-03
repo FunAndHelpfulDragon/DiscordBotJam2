@@ -25,7 +25,7 @@ class Running:
         if score.index(Y) > (len(score)/2):  # upper half
             inv = await g.Inv(author, "Inventory", True)
             stra = await g.Inv(author, 'DNA', True)
-            option = g.Random("", 1, False)
+            option = await g.Random("", 1, False)
             max = 1
             option[0] = option[0].replace(" ", "")
             unique = []
