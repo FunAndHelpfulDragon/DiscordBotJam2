@@ -95,7 +95,7 @@ class DNA(commands.Cog):
             await ctx.reply(f"Use `{await Lo.Info(ctx.guild.id, 'prefix')}run` to see your results from your new DNA layout!")  # noqa
 
     @commands.command(
-        aliases=['clear_inv', 'clearInv', 'clearinventory', 'Clearinventory', 'Iclear', 'clearinv'],  # noqa
+        aliases=['clear_inv', 'clearInv', 'clearinventory', 'Clearinventory', 'Iclear', 'clearinv', 'ci'],  # noqa
         help="Empties your DNA into your inventory",  # noqa
         description="None",
         usage="None"
@@ -118,9 +118,24 @@ class DNA(commands.Cog):
         DNA = await gen.Inv(ctx.author, "DNA", True)
         for x in range(0, len(Inv)):
             if Inv[x] != "":
-                for xx in range(0, len(DNA)):
-                    if xx == "":
-                        await gen.addInv(ctx.author, Inv[x], )
+                print("--")
+                print(x)
+                print(Inv[x])
+                print("--")
+                if Inv[x] not in DNA:
+
+                    print("Not it!")
+                    print("-+")
+                    for xx in range(1, len(DNA)):
+                        print(xx)
+                        print(DNA[xx])
+                        print(DNA[xx - 1] == "")
+                        if not DNA[xx - 1]:
+                            await gen.addInv(ctx.author, Inv[x].lower(), xx)  # noqa
+                            break
+
+                    Inv = await gen.Inv(ctx.author, "Inventory", True)
+                    DNA = await gen.Inv(ctx.author, "DNA", True)
         await ctx.send("Finished filling inventory")
 
     @commands.command(
