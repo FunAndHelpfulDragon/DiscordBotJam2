@@ -129,10 +129,7 @@ class Generation:
         # load invs
         S = await self.Inv(author, 'DNA', True)
         Inv = await self.Inv(author, 'Inventory', True)
-        # check if the position is empty
-        print("SPosition")
-        print(S, Position)
-        print(S[Position] == "")
+        # check if the position is emptys
         # print(S[Position].strip())
         if S[Position] == "":
             S[Position] = Colour  # add colour

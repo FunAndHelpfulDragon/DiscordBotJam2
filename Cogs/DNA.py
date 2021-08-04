@@ -118,18 +118,8 @@ class DNA(commands.Cog):
         DNA = await gen.Inv(ctx.author, "DNA", True)
         for x in range(0, len(Inv)):
             if Inv[x] != "":
-                print("--")
-                print(x)
-                print(Inv[x])
-                print("--")
                 if Inv[x] not in DNA:
-
-                    print("Not it!")
-                    print("-+")
                     for xx in range(1, len(DNA)):
-                        print(xx)
-                        print(DNA[xx])
-                        print(DNA[xx - 1] == "")
                         if not DNA[xx - 1]:
                             await gen.addInv(ctx.author, Inv[x].lower(), xx)  # noqa
                             break
