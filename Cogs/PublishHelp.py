@@ -84,27 +84,27 @@ class PublishHelp(commands.Cog, description="Help about Help (also about and cre
         )
         embed.add_field(
             name="Speed",
-            value="red, light blue, dark green, amber, canary, gold",
+            value="red, light blue, dark green, amber, canary, gold, teal, snow, pumpkin, lime, electric blue, bone",  # noqa
             inline=False
         )
         embed.add_field(
             name="Energy",
-            value="orange, light green, green, blue, dark blue, bronze, coral, desert",  # noqa
+            value="orange, light green, green, blue, dark blue, bronze, coral, desert, lava, emerald, brown",  # noqa
             inline=False
         )
         embed.add_field(
             name="Nodes",
-            value="yellow, purple, pink, charcol, flame, frostbite",
+            value="yellow, purple, pink, charcol, flame, frostbite, yellow orange, silver, sapphire, crimson, aqua, amethyst",  # noqa
             inline=False
         )
         embed.add_field(
             name="Time",
-            value="white, grey, cyan, carrot orange, lemon, jungle green",
+            value="white, grey, cyan, carrot orange, lemon, jungle green, violet, spring green, jade, copper, banana mania",  # noqa
             inline=False
         )
         embed.add_field(
             name="Nothing",
-            value="black, cadet, iceberg, mango",
+            value="black, cadet, iceberg, mango, vanilla, tan, neon green, mint, deep sky blue",  # noqa
             inline=False
         )
         await ctx.send(embed=embed)
@@ -159,9 +159,9 @@ class PublishHelp(commands.Cog, description="Help about Help (also about and cre
             name="RebeccaBanner#4912",
             value="Tester, helped with some other things as well."
         )
-        embed.set_footer(
-            text="Please do not attempt to direct message one of these to get them to do so, If you try to it might result in a block from them."  # noqa
-        )
+        # embed.set_footer(
+        #     text="Please do not attempt to direct message one of these to get them to do so, If you try to it might result in a block from them."  # noqa
+        # )
         await ctx.send(embed=embed)
 
 

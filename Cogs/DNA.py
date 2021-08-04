@@ -198,7 +198,7 @@ class DNA(commands.Cog):
         )
         embed.add_field(
             name="Goal",
-            value="Your goal, is to edit your DNA structure and try to get the best combination of DNA that there is. Using all 30 variations of strands (more coming soon). This is a running based simulation where each strand does different things to your bot. Use `!colourhelp` to get a list of colours."  # noqa
+            value="Your goal, is to edit your DNA structure and try to get the best combination of DNA that there is. Using all 55 variations of strands (more coming soon). This is a running based simulation where each strand does different things to your bot. Use `!colourhelp` to get a list of colours."  # noqa
         )
         embed.add_field(
             name="Help",

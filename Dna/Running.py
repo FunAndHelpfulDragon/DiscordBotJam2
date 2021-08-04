@@ -40,7 +40,7 @@ class Running:
                 max += 1
                 if option[0] not in unique:
                     unique.append(option[0])
-                if len(unique) >= 30:  # need to change value.
+                if len(unique) >= 55:  # need to change value.
                     return "Max", ""
             s = str(option[0])
             inv.append(s)
