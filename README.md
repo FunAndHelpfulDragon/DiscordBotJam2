@@ -13,5 +13,5 @@ https://discord.com/api/oauth2/authorize?client_id=868506788666966056&permission
 
 # NOTES
 -The bot using the above invite link will run 24/7<br>
--Most of the code is here for the exception of the key file (you have to create that yourself)<br>
+-Most of the code is here for the exception of the key file (you do also need to create a folder called "DNA" in "Files/"(you have to create that yourself)<br>
 -Fell free to fork the project, just credit us though.<br>
