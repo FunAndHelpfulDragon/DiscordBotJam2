@@ -196,7 +196,7 @@ class Running:
                 pos = CTable.index(item)
                 if str(pos) not in unlocked:  # and str(pos).strip():
                     unlocked.append(str(pos))
-        del unlocked[0]
+        # del unlocked[0]
         # del unlocked[0]
         unlockedtxt = str(unlocked)
         unlockedtxt = unlockedtxt.replace(" ", "")

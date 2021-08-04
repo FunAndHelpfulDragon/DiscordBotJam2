@@ -184,10 +184,10 @@ class Generation:
                     info = await Stats.readlines()
                     for unlock in inv:
                         unlock = int(unlock)
-                        C = Color[unlock].replace(" ", "").rstrip("\n")
-                        Colour = Colour.rstrip("\n")
+                        C = Color[unlock].replace(" ", "").rstrip("\n").lower()
+                        Colour = Colour.rstrip("\n").lower()
                         if C == Colour:
-                            return info[unlock]
+                            return info[unlock].rstrip("\n")
         except Exception:
             # print(e)
             return "Unknown"
