@@ -64,7 +64,8 @@ class PublishHelp(commands.Cog, description="Help about Help (also about and cre
                         await msg.clear_reaction("➡️")
                     await msg.add_reaction("❌")
             except asyncio.TimeoutError:  # timeout
-                await msg.delete()
+                if msg is not None:
+                    await msg.delete()
         else:  # delete but keep
             await msg.remove_reaction("⬅️", msg.author)
             await msg.remove_reaction("➡️", msg.author)
